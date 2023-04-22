@@ -27,6 +27,9 @@ const useGuestStore = defineStore({
     populateAllergiesFromDbData(dbResultData: VueFirestoreDocumentData<Allergies>) {
       const mappedAllergies = fireStoreMappers.mapToAllergiesFromDB(dbResultData)
       this.allergies = mappedAllergies
+    },
+    createNewGuest(newGuest: Guest): void {
+      console.log(newGuest)
     }
   },
 
@@ -39,6 +42,9 @@ const useGuestStore = defineStore({
       }
 
       return guestsInFamily
+    },
+    getAllergyId: (state: GuestState): string | undefined => {
+      return state.allergies.Id
     }
   }
 })

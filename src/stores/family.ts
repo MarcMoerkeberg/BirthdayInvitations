@@ -19,6 +19,9 @@ const useFamilyStore = defineStore({
     populateFamiliesFromDbData(dbResultData: VueFirestoreQueryData<Family>) {
       const mappedFamilies = fireStoreMappers.mapToFamiliesFromDB(dbResultData)
       this.families = mappedFamilies
+    },
+    createNewFamily(newFamily: Family): void {
+      console.log(newFamily)
     }
   },
 
