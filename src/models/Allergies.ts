@@ -1,6 +1,6 @@
-enum Allergies {
-    Nuts = 1,
-    Dairy = 2,
+interface Allergies {
+    Id?: string
+    Allergies: string[]
 }
 
 export default Allergies

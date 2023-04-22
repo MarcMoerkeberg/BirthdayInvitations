@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import DataComponent from './components/DataComponent.vue';
 </script>
 
 <template>
   <v-app>
+    <DataComponent />
     <v-main>
       <router-view />
     </v-main>

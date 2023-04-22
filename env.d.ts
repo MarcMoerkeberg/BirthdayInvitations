@@ -8,6 +8,7 @@ interface ImportMetaEnv {
     readonly VITE_FIREBASE_MESSAGINGSENDERID: string
     readonly VITE_FIREBASE_APPID: string
     readonly VITE_FIREBASE_APIKEY: string
+    readonly VITE_FIREBASE_ALLERGIESID: string
 }
 
 interface ImportMeta {
