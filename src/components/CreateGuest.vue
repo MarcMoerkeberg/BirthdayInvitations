@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { computed } from 'vue';
 import type Family from '@/models/Family';
 import useFamilyStore from '@/stores/family';
 import useGuestStore from '@/stores/guest';
+import type Guest from '../models/Guest'
+import type ValidationReponse from '@/models/VlidationReponse';
 
 const familieStore = useFamilyStore()
 const guestStore = useGuestStore()
-const allAllergies = computed(() => { return guestStore.allergies.Allergies })
+const allAllergies = computed(() => { return guestStore.allergies })
 const allFamilies = computed(() => { return familieStore.families })
 const familyHint = computed(() => { return selectedFamily.value ? getFamilyMemberNamesForHint(selectedFamily.value) : '' })
 
@@ -20,13 +22,35 @@ function getFamilyMemberNamesForHint(family: Family): string {
     return familyNames.substring(0, familyNames.length - 2)
 }
 
-const familyValidationRules = [(value: Family) => { return value ? true : 'En gæst skal være tilknyttet en familie.' }]
-const nameValidationRules = [(value: string) => { return value ? true : 'En gæst skal have et navn.' }]
+const familyValidationRules = [(value: Family | undefined) => { return !!value || 'En gæst skal være tilknyttet en familie.' }]
+const nameValidationRules = [(value: string) => { return !!value || 'En gæst skal have et for- og efternavn.' }]
+const validationForm: Ref<HTMLFormElement | undefined> = ref()
 
-var guestName = ref('')
+var guestFirstName = ref('')
+var guestLastName = ref('')
 var selectedAllergies = ref([])
 var selectedFamily = ref<Family>()
 var attending = ref<boolean>(false);
+
+
+async function createGuest(): Promise<void> {
+    const isInputformValid: ValidationReponse = await validationForm.value?.validate()
+    if (isInputformValid.valid) {
+        const newGuest: Guest = {
+            FirstName: guestFirstName.value,
+            LastName: guestLastName.value,
+            Allergies: {
+                Id: guestStore.getAllergyId,
+                Allergies: selectedAllergies.value
+            },
+            Attending: attending.value,
+            Id: ''
+        }
+
+        guestStore.createNewGuest(newGuest)
+        await validationForm.value?.reset()
+    }
+}
 </script>
 
 <template>
@@ -34,11 +58,14 @@ var attending = ref<boolean>(false);
         <v-card color="primary">
             <v-card-title>Gæst</v-card-title>
             <v-divider></v-divider>
-            <v-form @submit.prevent>
+            <v-form ref="validationForm">
                 <div class="padding-x-10p">
                     <v-text-field :rules="nameValidationRules"
-                                  v-model="guestName"
+                                  v-model="guestFirstName"
                                   label="Fornavn" />
+                    <v-text-field :rules="nameValidationRules"
+                                  v-model="guestLastName"
+                                  label="Efternavn" />
                     <v-select :items="allFamilies"
                               item-title="Name"
                               item-value="Id"
@@ -51,7 +78,7 @@ var attending = ref<boolean>(false);
                               :rules="familyValidationRules" />
                     <v-select label="Allergier"
                               v-model="selectedAllergies"
-                              :items="allAllergies"
+                              :items="allAllergies.Allergies"
                               chips
                               multiple
                               clearable />
@@ -62,7 +89,7 @@ var attending = ref<boolean>(false);
                 <v-btn color="success"
                        size="small"
                        class="action-btn"
-                       type="submit">Opret ny gæst</v-btn>
+                       @click="createGuest">Opret ny gæst</v-btn>
             </v-form>
         </v-card>
     </v-col>
