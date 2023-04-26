@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { isMobile } from '@/helpers/EnviorementHelper'
+import routes from '@/models/componentModels/Routes'
+import { useRouter } from 'vue-router'
+
 const description = `I anledningen af min 30 års fødselsdag holder jeg et lille arrangement her i Nordjylland, helt præcist afholdes det på Løkken stand og på Havregaarden.`
 const description2 = `Fordi der er flere som skal rejse langt, vil der være mulighed for overnatning, med den ene krølle at man skal sørge for at medbringe eget sengetøj.`
 const description3 = `Arrangementet starter officielt lørdag d. 24/6 kl 11:00 på Løkken strand. Dog er alle velkomne på Havregaarden allerede d. 23/6, fra kl 16:00.`
@@ -11,11 +15,22 @@ const description9 = `Når maden er spist og vi har fået et stykke kage, bliver
 const description10 = `Glæder mig til at se jer alle i weekenden d. 23-25 Juni.`
 const description11 = `Kærlige hilsener fra Marc`
 
+const router = useRouter()
+const heroButtonRoutes = routes.getHeroButtonsRouteDetails()
+const isMobileDevice = isMobile()
+
 //Tilføj deltager til stranden/ frokost
 //Tilføj surf
 </script>
 
 <template>
+  <v-container class="overlap-banner vertical-center btn-container"
+               v-if="isMobileDevice">
+    <v-btn v-for="routeDetail in heroButtonRoutes"
+           size="large"
+           color="var(--vuetify-secondary)"
+           @click="router.push(routeDetail.Route)">{{ routeDetail.Title }}</v-btn>
+  </v-container>
   <video autoplay
          loop
          muted
@@ -23,7 +38,7 @@ const description11 = `Kærlige hilsener fra Marc`
     <source src="../assets/video/4000-1_04925.mp4"
             type="video/mp4">
   </video>
-  <v-sheet>
+  <!-- <v-sheet>
     <div>{{ description }}</div>
     <div>{{ description2 }}</div>
     <div>{{ description3 }}</div>
@@ -35,48 +50,29 @@ const description11 = `Kærlige hilsener fra Marc`
     <div>{{ description9 }}</div>
     <div>{{ description10 }}</div>
     <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-    <div>{{ description11 }}</div>
-  </v-sheet>
+  </v-sheet> -->
 </template>
 
 <style scoped>
+.v-btn {
+  max-width: 14em;
+}
+
 .video {
   height: 100vh;
   width: 100vw;
   object-fit: cover;
   position: relative;
   object-position: 30%;
+}
+
+.btn-container {
+  flex-direction: column;
+  gap: 40px;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  flex-wrap: wrap-reverse;
+  margin-top: 64px;
 }
 
 @media (min-width: 1024px) {

@@ -14,17 +14,19 @@ interface IRoute {
     LandingPage: RouteDetails
     Login: RouteDetails
     getNonHiddenRouteDetails(): Array<RouteDetails>
+    getHeroButtonsRouteDetails(): Array<RouteDetails>
 }
 
 const routes: IRoute = {
     Event: { Title: 'Begivenheder', Route: '/events', IsHiddenRoute: false },
     Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false },
     Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false },
-    Details: { Title: 'Detaljer', Route: '/', IsHiddenRoute: false },
+    Details: { Title: 'Detaljer', Route: '/details', IsHiddenRoute: false },
     Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true },
     LandingPage: { Title: '', Route: '/', IsHiddenRoute: true },
     Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true },
-    getNonHiddenRouteDetails: getNonHiddenRouteDetails
+    getNonHiddenRouteDetails: getNonHiddenRouteDetails,
+    getHeroButtonsRouteDetails: getHeroButtonsRouteDetails
 }
 
 const isRouteDetails = (input: string | RouteDetails) => input.valueOf().hasOwnProperty('Route')
@@ -42,6 +44,15 @@ function getNonHiddenRouteDetails(): Array<RouteDetails> {
     })
 
     return allNonHiddenRoutes
+}
+
+function getHeroButtonsRouteDetails(): Array<RouteDetails> {
+    var heroBtnDetails: Array<RouteDetails> = []
+    heroBtnDetails.push(routes.Menu)
+    heroBtnDetails.push(routes.Registration)
+    heroBtnDetails.push(routes.Details)
+
+    return heroBtnDetails
 }
 
 export default routes

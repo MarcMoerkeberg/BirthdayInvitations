@@ -1,7 +1,8 @@
 /* @import './base.css'; */
 :root {
     --minus-vuetify-app-bar-margin: -64px;
-    --theme-background-alpha: rgba(15, 39, 54, 0.8)
+    --theme-background-alpha: rgba(15, 39, 54, 0.8);
+    --vuetify-secondary: #f8ab32;
 }
 
 .cursor-pointer {

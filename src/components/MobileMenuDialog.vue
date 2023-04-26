@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import routes, { type RouteDetails } from '@/models/componentModels/Routes';
-import { ref } from 'vue';
+import routes from '@/models/componentModels/Routes';
 import { useRouter } from 'vue-router';
 
 interface MobileMenuProperties {
@@ -13,14 +12,13 @@ type MobileMenuEmits = {
 }
 const emits = defineEmits<MobileMenuEmits>()
 
-const menuButtons = ref<Array<RouteDetails>>(routes.getNonHiddenRouteDetails())
+const menuButtons = routes.getNonHiddenRouteDetails()
 const router = useRouter()
 
 function goToPath(route: string) {
     router.push(route)
     emits('closeDialog')
 }
-
 </script>
 
 <template>
