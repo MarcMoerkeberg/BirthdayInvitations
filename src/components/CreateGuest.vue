@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue';
 import { computed } from 'vue';
-import type Family from '@/models/Family';
 import useFamilyStore from '@/stores/family';
 import useGuestStore from '@/stores/guest';
-import type Guest from '../models/Guest'
 import type ValidationReponse from '@/models/VlidationReponse';
+import type { Family } from '@/models/Family';
+import type { NewGuest } from '@/models/Guest';
 
 const familieStore = useFamilyStore()
 const guestStore = useGuestStore()
@@ -22,7 +22,7 @@ function getFamilyMemberNamesForHint(family: Family): string {
     return familyNames.substring(0, familyNames.length - 2)
 }
 
-const familyValidationRules = [(value: Family | undefined) => { return !!value || 'En gæst skal være tilknyttet en familie.' }]
+const familyValidationRules = [(value: Family) => { return !!value.Id || 'En gæst skal være tilknyttet en familie.' }]
 const nameValidationRules = [(value: string) => { return !!value || 'En gæst skal have et for- og efternavn.' }]
 const validationForm: Ref<HTMLFormElement | undefined> = ref()
 
@@ -36,18 +36,15 @@ var attending = ref<boolean>(false);
 async function createGuest(): Promise<void> {
     const isInputformValid: ValidationReponse = await validationForm.value?.validate()
     if (isInputformValid.valid) {
-        const newGuest: Guest = {
+        const newGuest: NewGuest = {
             FirstName: guestFirstName.value,
             LastName: guestLastName.value,
-            Allergies: {
-                Id: guestStore.getAllergyId,
-                Allergies: selectedAllergies.value
-            },
+            Allergies: selectedAllergies.value,
             Attending: attending.value,
-            Id: ''
         }
+        const guestFamily: Family = selectedFamily.value ?? { Id: '', MemberIds: [], Name: '' }
 
-        guestStore.createNewGuest(newGuest)
+        await guestStore.createNewGuest(newGuest, guestFamily)
         await validationForm.value?.reset()
     }
 }

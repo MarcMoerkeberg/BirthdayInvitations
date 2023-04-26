@@ -3,8 +3,8 @@ import { ref, type Ref } from 'vue';
 import { computed } from 'vue';
 import useGuestStore from '@/stores/guest';
 import type ValidationReponse from '@/models/VlidationReponse';
-import type Family from '@/models/Family';
 import useFamilyStore from '@/stores/family';
+import type { NewFamily } from '@/models/Family';
 
 const guestStore = useGuestStore()
 const familyStore = useFamilyStore()
@@ -18,10 +18,9 @@ var familyName = ref('')
 async function createFamily(): Promise<void> {
     const isInputformValid: ValidationReponse = await validationForm.value?.validate()
     if (isInputformValid.valid) {
-        const newFamily: Family = {
+        const newFamily: NewFamily = {
             Name: familyName.value,
-            MemberIds: selectedGuestIds.value,
-            Id: familyStore.$state.families.length + 1
+            MemberIds: selectedGuestIds.value
         }
 
         familyStore.createNewFamily(newFamily)
