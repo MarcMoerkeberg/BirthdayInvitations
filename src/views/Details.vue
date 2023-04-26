@@ -1,10 +1,6 @@
 <script setup lang="ts">
 </script>
 
-<template>
-    <v-card>
-        Hej!
-    </v-card>
-</template>
+<template></template>
 
 <style scoped></style>
