@@ -3,11 +3,8 @@ import DataComponent from './components/DataComponent.vue';
 import MobileAppbar from './components/MobileAppbar.vue';
 import DesktopAppbar from './components/DesktopAppbar.vue';
 import { isMobile } from './helpers/EnviorementHelper'
-import { ref } from 'vue';
-import { onMounted } from 'vue';
 
-const isMobileDevice = ref<boolean>(false)
-onMounted(() => { isMobileDevice.value = isMobile() }) 
+const isMobileDevice = isMobile()
 </script>
 
 <template>
@@ -21,6 +18,4 @@ onMounted(() => { isMobileDevice.value = isMobile() })
   </v-app>
 </template>
 
-<style scoped>
-@media (min-width: 1024px) {}
-</style>
+<style scoped></style>
