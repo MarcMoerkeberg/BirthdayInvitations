@@ -1,7 +1,10 @@
-interface RouteDetails {
+export interface RouteDetails {
     Title: string,
-    Route: string
+    Route: string,
+    IsHiddenRoute: boolean
 }
+
+export const isRouteDetails = (input: string | RouteDetails) => input.valueOf().hasOwnProperty('Route')
 
 interface IRoute {
     Event: RouteDetails,
@@ -14,13 +17,13 @@ interface IRoute {
 }
 
 const Routes: IRoute = {
-    Event: { Title: 'Begivenheder', Route: '/events' },
-    Registration: { Title: 'Tilmelding', Route: '/registration' },
-    Menu: { Title: 'Menu', Route: '/menu' },
-    Details: { Title: 'Detaljer', Route: '/' },
-    Admin: { Title: 'Admin', Route: '/adminoverview' },
-    LandingPage: { Title: '', Route: '/' },
-    Login: { Title: 'Login', Route: '/login' },
+    Event: { Title: 'Begivenheder', Route: '/events', IsHiddenRoute: false },
+    Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false },
+    Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false },
+    Details: { Title: 'Detaljer', Route: '/', IsHiddenRoute: false },
+    Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true },
+    LandingPage: { Title: '', Route: '/', IsHiddenRoute: true },
+    Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true },
 }
 
 export default Routes
