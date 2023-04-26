@@ -5,38 +5,38 @@ import Menu from '../views/Menu.vue'
 import Registration from '../views/Registration.vue'
 import Details from '../views/Details.vue'
 import Login from '@/views/Login.vue'
-import Routes from '@/models/componentModels/Routes'
+import routes from '@/models/componentModels/Routes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: Routes.LandingPage.Route,
+      path: routes.LandingPage.Route,
       name: 'landing-page',
       component: LandingPage
     },
     {
-      path: Routes.Login.Route,
+      path: routes.Login.Route,
       name: 'login',
       component: Login
     },
     {
-      path: Routes.Admin.Route,
+      path: routes.Admin.Route,
       name: 'adminverview',
       component: AdminOverview
     },
     {
-      path: Routes.Menu.Route,
+      path: routes.Menu.Route,
       name: 'menu',
       component: Menu
     },
     {
-      path: Routes.Details.Route,
+      path: routes.Details.Route,
       name: 'details',
       component: Details
     },
     {
-      path: Routes.Registration.Route,
+      path: routes.Registration.Route,
       name: 'registration',
       component: Registration
     },
