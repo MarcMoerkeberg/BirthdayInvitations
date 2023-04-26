@@ -1,22 +1,22 @@
 export interface RouteDetails {
-    Title: string,
-    Route: string,
+    Title: string
+    Route: string
     IsHiddenRoute: boolean
 }
 
-export const isRouteDetails = (input: string | RouteDetails) => input.valueOf().hasOwnProperty('Route')
 
 interface IRoute {
-    Event: RouteDetails,
-    Registration: RouteDetails,
-    Menu: RouteDetails,
-    Details: RouteDetails,
-    Admin: RouteDetails,
-    LandingPage: RouteDetails,
-    Login: RouteDetails,
+    Event: RouteDetails
+    Registration: RouteDetails
+    Menu: RouteDetails
+    Details: RouteDetails
+    Admin: RouteDetails
+    LandingPage: RouteDetails
+    Login: RouteDetails
+    getNonHiddenRouteDetails(): Array<RouteDetails>
 }
 
-const Routes: IRoute = {
+const routes: IRoute = {
     Event: { Title: 'Begivenheder', Route: '/events', IsHiddenRoute: false },
     Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false },
     Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false },
@@ -24,6 +24,24 @@ const Routes: IRoute = {
     Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true },
     LandingPage: { Title: '', Route: '/', IsHiddenRoute: true },
     Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true },
+    getNonHiddenRouteDetails: getNonHiddenRouteDetails
 }
 
-export default Routes
+const isRouteDetails = (input: string | RouteDetails) => input.valueOf().hasOwnProperty('Route')
+
+function getNonHiddenRouteDetails(): Array<RouteDetails> {
+    var allNonHiddenRoutes: Array<RouteDetails> = []
+    const routePropsAsArray: Array<Array<string | RouteDetails>> = Object.entries(routes)
+
+    routePropsAsArray.forEach(propertyArray => {
+        const routeDetails = propertyArray.find(property => isRouteDetails(property)) as RouteDetails
+
+        if (routeDetails && !routeDetails.IsHiddenRoute) {
+            allNonHiddenRoutes.push(routeDetails)
+        }
+    })
+
+    return allNonHiddenRoutes
+}
+
+export default routes

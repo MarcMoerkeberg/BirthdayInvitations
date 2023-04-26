@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Routes, { isRouteDetails, type RouteDetails } from '@/models/componentModels/Routes';
+import routes, { type RouteDetails } from '@/models/componentModels/Routes';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -14,24 +14,14 @@ type MobileMenuEmits = {
 }
 const emits = defineEmits<MobileMenuEmits>()
 
-const menuButtons = ref<Array<RouteDetails>>([])
+const menuButtons = ref<Array<RouteDetails>>(routes.getNonHiddenRouteDetails())
 const router = useRouter()
-onMounted(() => { initButtons() })
 
 function goToPath(route: string) {
     router.push(route)
     emits('closeDialog')
 }
-function initButtons() {
-    const routePropsAsArray: Array<Array<string | RouteDetails>> = Object.entries(Routes)
 
-    routePropsAsArray.forEach(propertyArray => {
-        const routeDetails = propertyArray.find(property => isRouteDetails(property)) as RouteDetails
-        if (!routeDetails.IsHiddenRoute) {
-            menuButtons.value.push(routeDetails)
-        }
-    })
-}
 </script>
 
 <template>
