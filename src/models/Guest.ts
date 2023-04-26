@@ -1,11 +1,9 @@
-import type Allergies from "./Allergies"
-
-interface Guest {
-    Id: string
+export interface NewGuest {
     FirstName: string
     LastName: string
     Attending: boolean
-    Allergies: Allergies
+    Allergies: string[]
 }
-
-export default Guest
+export interface Guest extends NewGuest {
+    Id: string
+}

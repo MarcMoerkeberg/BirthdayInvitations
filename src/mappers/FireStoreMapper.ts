@@ -1,6 +1,6 @@
 import type Allergies from "@/models/Allergies"
-import type Family from "@/models/Family"
-import type Guest from "@/models/Guest"
+import type { Family } from "@/models/Family"
+import type { Guest } from "@/models/Guest"
 import type { VueDatabaseDocumentData, VueFirestoreDocumentData, VueFirestoreQueryData } from "vuefire"
 
 const fireStoreMappers = {
@@ -8,7 +8,7 @@ const fireStoreMappers = {
         const mappedFamilies = dbFamilyData.map((family: VueDatabaseDocumentData<Family>) => {
             return {
                 ...family as Family,
-                Id: family?.id != undefined ? Number.parseInt(family.id) : 0
+                Id: family?.id
             }
         }) as Family[]
 

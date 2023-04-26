@@ -1,7 +1,8 @@
-interface Family {
-    Id: number
+export interface NewFamily {
     Name: string
     MemberIds: string[] | undefined
 }
 
-export default Family
+export interface Family extends NewFamily {
+    Id: string
+}
