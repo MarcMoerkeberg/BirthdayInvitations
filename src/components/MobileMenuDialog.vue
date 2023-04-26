@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import routes, { type RouteDetails } from '@/models/componentModels/Routes';
 import { ref } from 'vue';
-import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 interface MobileMenuProperties {
@@ -30,6 +29,11 @@ function goToPath(route: string) {
               transition="dialog-top-transition"
               contained>
         <v-sheet class="menu-buttons-container">
+            <div class="vertical-center">
+                <img src="../assets/images/crafty-champagne-cork.png"
+                     width="64"
+                     @click="goToPath(routes.LandingPage.Route)">
+            </div>
             <v-btn v-for="button in menuButtons"
                    :v-bind="button"
                    size="x-large"
