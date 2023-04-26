@@ -2,16 +2,17 @@
 import { collection, doc } from 'firebase/firestore'
 import { useFirestore, useDocument, useCollection } from 'vuefire';
 import type Allergies from '../models/Allergies'
-import type Family from '@/models/Family';
-import type Guest from '@/models/Guest';
 import { watch } from 'vue';
 import useFamilyStore from '../stores/family'
 import useGuestStore from '@/stores/guest';
+import type { Family } from '@/models/Family';
+import type { Guest } from '@/models/Guest';
+import CollectionNames from '@/models/CollectionNames';
 
 const db = useFirestore()
-const allergiesDBResult = useDocument<Allergies>(doc(collection(db, 'Allergies'), import.meta.env.VITE_FIREBASE_ALLERGIESID))
-const familiesDBResult = useCollection<Family>(collection(db, 'Families'))
-const guestsDBResult = useCollection<Guest>(collection(db, 'Guests'))
+const allergiesDBResult = useDocument<Allergies>(doc(collection(db, CollectionNames.Allergies), import.meta.env.VITE_FIREBASE_ALLERGIESID))
+const familiesDBResult = useCollection<Family>(collection(db, CollectionNames.Family))
+const guestsDBResult = useCollection<Guest>(collection(db, CollectionNames.Guest))
 
 const familyStore = useFamilyStore()
 const guestStore = useGuestStore()
