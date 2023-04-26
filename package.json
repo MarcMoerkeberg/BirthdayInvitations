@@ -11,13 +11,13 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "firebase": "^9.19.1",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
     "vuefire": "^3.1.0",
-    "vuetify": "npm:@vuetify/nightly@next",
-    "@mdi/font": "5.9.55"
+    "vuetify": "npm:@vuetify/nightly@next"
   },
   "devDependencies": {
     "@types/node": "^18.14.2",
