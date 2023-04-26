@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
-import type Family from '@/models/Family'
 import fireStoreMappers from '@/mappers/FireStoreMapper'
-import type { VueFirestoreQueryData } from 'vuefire'
+import { useFirestore, type VueFirestoreQueryData } from 'vuefire'
+import type { Family, NewFamily } from '@/models/Family'
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import CollectionNames from '@/models/CollectionNames';
 
 interface FamilyState {
   families: Family[]
@@ -20,8 +22,25 @@ const useFamilyStore = defineStore({
       const mappedFamilies = fireStoreMappers.mapToFamiliesFromDB(dbResultData)
       this.families = mappedFamilies
     },
-    createNewFamily(newFamily: Family): void {
-      console.log(newFamily)
+    async createNewFamily(newFamily: NewFamily): Promise<boolean> {
+      const db = useFirestore()
+      const dbResult = await addDoc(collection(db, CollectionNames.Family), newFamily)
+      if (dbResult) {
+        const createdFamily: Family = { ...newFamily, Id: dbResult.id }
+        this.families.push(createdFamily)
+      }
+
+      return !!dbResult
+    },
+    async addFamilyMemberId(family: Family, memberId: string): Promise<void> {
+      family.MemberIds?.push(memberId)
+      const db = useFirestore()
+      const familyDocRef = doc(db, CollectionNames.Family, family.Id)
+
+      await updateDoc(familyDocRef, { MemberIds: family.MemberIds })
+
+      const updatedFamilyIndex: number = this.families.findIndex(stateFamily => stateFamily.Id == family.Id)
+      this.families.splice(updatedFamilyIndex, 1, family)
     }
   },
 

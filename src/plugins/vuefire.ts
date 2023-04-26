@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { VueFireAuth } from "vuefire";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -11,4 +12,4 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export default { firebaseApp: initializeApp(firebaseConfig) }
+export default { firebaseApp: initializeApp(firebaseConfig), modules: [VueFireAuth()] }

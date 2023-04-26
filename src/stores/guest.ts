@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia'
 import fireStoreMappers from '@/mappers/FireStoreMapper'
-import type { VueFirestoreDocumentData, VueFirestoreQueryData } from 'vuefire'
-import type Guest from '@/models/Guest'
+import { useFirestore, type VueFirestoreDocumentData, type VueFirestoreQueryData } from 'vuefire'
 import type Allergies from '@/models/Allergies'
-import type Family from '@/models/Family'
+import type { Guest, NewGuest } from '@/models/Guest'
+import type { Family } from '@/models/Family'
+import { addDoc, collection } from 'firebase/firestore'
+import CollectionNames from '@/models/CollectionNames'
+import useFamilyStore from './family'
 
 interface GuestState {
   guests: Guest[],
@@ -28,8 +31,20 @@ const useGuestStore = defineStore({
       const mappedAllergies = fireStoreMappers.mapToAllergiesFromDB(dbResultData)
       this.allergies = mappedAllergies
     },
-    createNewGuest(newGuest: Guest): void {
-      console.log(newGuest)
+    async createNewGuest(newGuest: NewGuest, family: Family): Promise<boolean> {
+      const db = useFirestore()
+      const dbResult = await addDoc(collection(db, CollectionNames.Guest), newGuest)
+      let dbSuccess = !!dbResult.id
+
+      if (dbSuccess) {
+        const familyStore = useFamilyStore()
+        await familyStore.addFamilyMemberId(family, dbResult.id)
+
+        const createdGuest: Guest = { ...newGuest, Id: dbResult.id }
+        this.guests.push(createdGuest)
+      }
+
+      return dbSuccess
     }
   },
 
