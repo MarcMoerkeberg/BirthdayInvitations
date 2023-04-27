@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import routes from '@/models/componentModels/Routes';
+import { onBeforeUnmount } from 'vue';
+import { computed } from 'vue';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 interface MobileMenuProperties {
@@ -19,10 +22,20 @@ function goToPath(route: string) {
     router.push(route)
     emits('closeDialog')
 }
+
+function preventScroll(event: TouchEvent) {
+    if (componentProps.showDialog) {
+        event.preventDefault()
+    }
+}
+
+// onMounted(() => { window.addEventListener('touchmove', preventScroll, { passive: false }) })
+// onBeforeUnmount(() => { window.addEventListener('touchmove', preventScroll) })
 </script>
 
 <template>
     <v-dialog v-model="componentProps.showDialog"
+              scrollable
               fullscreen
               transition="dialog-top-transition"
               contained>

@@ -11,11 +11,15 @@ const isMobileDevice = isMobile()
   <v-app>
     <DataComponent />
     <v-main>
-      <MobileAppbar v-if="isMobileDevice" />
+      <MobileAppbar v-if="true" />
       <DesktopAppbar v-else />
       <router-view />
     </v-main>
   </v-app>
 </template>
 
-<style scoped></style>
+<!-- <style>
+html {
+  overflow-y: hidden;
+}
+</style> -->
