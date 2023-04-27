@@ -9,7 +9,7 @@ interface IRoute {
     Event: RouteDetails
     Registration: RouteDetails
     Menu: RouteDetails
-    Details: RouteDetails
+    Invitation: RouteDetails
     Admin: RouteDetails
     LandingPage: RouteDetails
     Login: RouteDetails
@@ -21,7 +21,7 @@ const routes: IRoute = {
     Event: { Title: 'Begivenheder', Route: '/events', IsHiddenRoute: false },
     Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false },
     Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false },
-    Details: { Title: 'Detaljer', Route: '/details', IsHiddenRoute: false },
+    Invitation: { Title: 'Invitation', Route: '/details', IsHiddenRoute: false },
     Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true },
     LandingPage: { Title: '', Route: '/', IsHiddenRoute: true },
     Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true },
@@ -48,9 +48,9 @@ function getNonHiddenRouteDetails(): Array<RouteDetails> {
 
 function getHeroButtonsRouteDetails(): Array<RouteDetails> {
     var heroBtnDetails: Array<RouteDetails> = []
-    heroBtnDetails.push(routes.Menu)
+    heroBtnDetails.push(routes.Invitation)
     heroBtnDetails.push(routes.Registration)
-    heroBtnDetails.push(routes.Details)
+    heroBtnDetails.push(routes.Menu)
 
     return heroBtnDetails
 }

@@ -3,7 +3,7 @@ import LandingPage from '../views/LandingPage.vue'
 import AdminOverview from '../views/AdminOverview.vue'
 import Menu from '../views/Menu.vue'
 import Registration from '../views/Registration.vue'
-import Details from '../views/Details.vue'
+import Invitation from '../views/Invitation.vue'
 import Login from '@/views/Login.vue'
 import Events from '@/views/Events.vue'
 import routes from '@/models/componentModels/Routes'
@@ -32,9 +32,9 @@ const router = createRouter({
       component: Menu
     },
     {
-      path: routes.Details.Route,
-      name: 'details',
-      component: Details
+      path: routes.Invitation.Route,
+      name: 'invitation',
+      component: Invitation
     },
     {
       path: routes.Event.Route,
