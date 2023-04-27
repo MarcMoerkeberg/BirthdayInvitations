@@ -21,7 +21,7 @@ const routes: IRoute = {
     Event: { Title: 'Begivenheder', Route: '/events', IsHiddenRoute: false },
     Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false },
     Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false },
-    Invitation: { Title: 'Invitation', Route: '/details', IsHiddenRoute: false },
+    Invitation: { Title: 'Invitation', Route: '/invitation', IsHiddenRoute: false },
     Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true },
     LandingPage: { Title: '', Route: '/', IsHiddenRoute: true },
     Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true },
