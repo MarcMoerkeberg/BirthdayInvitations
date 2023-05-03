@@ -1,55 +1,52 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import MobileMenuDialog from './MobileMenuDialog.vue';
+import { computed, ref, type ComputedRef } from 'vue';
+import routes from '@/models/componentModels/Routes';
 import { useRouter } from 'vue-router';
-import routes, { type RouteDetails } from '@/models/componentModels/Routes';
-import type { ComputedRef } from 'vue';
 
-const showDialog = ref<boolean>(false);
 const router = useRouter()
-const currentRouteIsLandingPage: ComputedRef<boolean> = computed(() => { return router.currentRoute.value.path == routes.LandingPage.Route })
-const showCurrentRouteBanner: ComputedRef<boolean> = computed(() => { return !showDialog.value && !currentRouteIsLandingPage.value })
-const currentRouteTitle: ComputedRef<string> = computed(() => {
-    const routeDetails = routes.getNonHiddenRouteDetails()
-    const currentRouteDetails: RouteDetails | undefined = routeDetails.find(details => details.Route === router.currentRoute.value.path)
-    return currentRouteDetails?.Title ?? ''
-})
+const showDialog = ref<boolean>(false);
+const menuButtons = routes.getNonHiddenRouteDetails()
+const makeNavBarTransparent: ComputedRef<boolean> = computed(() => { return !showDialog.value && router.currentRoute.value.path == routes.LandingPage.Route && window.scrollY < 20 })
 </script>
 
 <template>
-    <div :class="[currentRouteIsLandingPage && !showDialog ? 'justify-end' : 'justify-space-between',
-    { 'bg-color-vuetifybackground': showDialog },
-    { 'route-banner': showCurrentRouteBanner },
-        'overlap-banner',
-        'mobile-toolbar'
-    ]">
-        <v-card-title v-show="showCurrentRouteBanner">{{ currentRouteTitle }}</v-card-title>
-        <v-card-title v-show="showDialog">Marcs 30 års fødselsdag</v-card-title>
-        <v-btn density="default"
-               :icon="showDialog ? 'mdi-close' : 'mdi-menu'"
-               variant="text"
-               class="bg-color-transparent"
-               size="x-large"
-               @click="showDialog = !showDialog" />
-    </div>
-    <div class="menu-dialog-container">
-        <MobileMenuDialog :show-dialog="showDialog"
-                          @close-dialog="showDialog = false" />
-    </div>
+    <v-app-bar elevation="0"
+               scroll-behavior="hide"
+               scroll-threshold="100"
+               color="primary"
+               :class="{ 'bg-color-transparent': makeNavBarTransparent }">
+        <template v-slot:append>
+            <v-app-bar-nav-icon :icon="showDialog ? 'mdi-close' : 'mdi-menu'"
+                                @click="showDialog = !showDialog" />
+        </template>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="showDialog"
+                         location="top"
+                         temporary
+                         style="height:100vh;">
+        <div class="navigation-button-container">
+            <img src="../assets/images/crafty-champagne-cork.png"
+                 width="64"
+                 @click="router.push(routes.LandingPage.Route)">
+            <v-list-item v-for="button in menuButtons"
+                         :key="button.Title"
+                         :title="button.Title"
+                         :to="button.Route" />
+        </div>
+    </v-navigation-drawer>
 </template>
 
 <style scoped>
-/* Noget her er dumt ift mobil dialog med højden. Det har muligvis noget med det her komponents placering at gøre.*/
-.menu-dialog-container {
-    height: calc(100% - 64px);
-    width: 100vw;
-    margin-top: 64px;
-    position: absolute;
-    overflow: hidden;
+.bg-color-transparent {
+    background-color: transparent !important;
 }
 
-.route-banner {
-    position: fixed;
-    background-color: aliceblue;
+.navigation-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding-top: 40px;
 }
 </style>

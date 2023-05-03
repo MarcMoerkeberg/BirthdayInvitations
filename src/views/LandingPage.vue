@@ -64,13 +64,10 @@ const eventDescription = computed(() => { return eventStore.$state.event.Descrip
   width: 100vw;
   height: calc(100vh - 64px);
   flex-wrap: wrap-reverse;
-  margin-top: 64px;
 }
 
-@media (min-width: 1024px) {
-  .video {
-    margin-top: var(--minus-vuetify-app-bar-margin)
-  }
+.video {
+  margin-top: var(--minus-vuetify-app-bar-margin)
 }
 </style>
 
