@@ -22,7 +22,7 @@ const eventDescription = computed(() => { return eventStore.$state.event.Descrip
                class="overlap-banner vertical-center btn-container">
     <v-btn v-for="routeDetail in heroButtonRoutes"
            size="large"
-           color="var(--vuetify-secondary)"
+           color="secondary"
            @click="router.push(routeDetail.Route)">{{ routeDetail.Title }}</v-btn>
   </v-container>
   <v-row v-else

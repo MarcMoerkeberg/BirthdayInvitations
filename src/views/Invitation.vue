@@ -12,35 +12,7 @@ const buttonRoutes: Array<RouteDetails> = [routes.Registration, routes.Menu]
 </script>
 
 <template>
-    <v-container style="margin-top: var(--vuetify-app-bar-margin);">
-        <v-card title="Invitation"
-                v-show="eventDescription"
-                subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-                :text="eventDescription" />
-        <v-card title="Invitation"
-                v-show="eventDescription"
-                subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-                :text="eventDescription" />
-        <v-card title="Invitation"
-                v-show="eventDescription"
-                subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-                :text="eventDescription" />
-        <v-card title="Invitation"
-                v-show="eventDescription"
-                subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-                :text="eventDescription" />
-        <v-card title="Invitation"
-                v-show="eventDescription"
-                subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-                :text="eventDescription" />
-        <v-card title="Invitation"
-                v-show="eventDescription"
-                subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-                :text="eventDescription" />
-        <v-card title="Invitation"
-                v-show="eventDescription"
-                subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-                :text="eventDescription" />
+    <v-container>
         <v-card title="Invitation"
                 v-show="eventDescription"
                 subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
@@ -51,7 +23,7 @@ const buttonRoutes: Array<RouteDetails> = [routes.Registration, routes.Menu]
             <v-col cols="auto"
                    v-for="routeDetails in buttonRoutes">
                 <v-btn size="x-large"
-                       color="var(--vuetify-secondary)"
+                       color="secondary"
                        :icon="routeDetails.Icon"
                        @click="router.push(routeDetails.Route)" />
             </v-col>

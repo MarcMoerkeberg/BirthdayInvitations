@@ -10,7 +10,7 @@ const makeNavBarTransparent: ComputedRef<boolean> = computed(() => { return !sho
 </script>
 
 <template>
-    <v-app-bar elevation="0"
+    <v-app-bar :elevation="makeNavBarTransparent ? 0 : 2"
                scroll-behavior="hide"
                scroll-threshold="100"
                color="primary"
