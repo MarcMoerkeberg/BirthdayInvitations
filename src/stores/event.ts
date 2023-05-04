@@ -19,7 +19,8 @@ const useEventStore = defineStore({
       //TODO: Get data from db and map to internal
 
       const invitation = `I anledningen af min 30 års fødselsdag holder jeg et lille arrangement her i Nordjylland, helt præcist afholdes det på Løkken strand og på Havregaarden. 
-      Fordi der er flere som skal rejse langt, vil der være mulighed for overnatning, med den ene krølle at man skal sørge for at medbringe eget sengetøj og håndklæder. 
+      Fordi der er flere som skal rejse langt, vil der være mulighed for overnatning, med den ene krølle at man skal sørge for at medbringe eget sengetøj og håndklæder.
+      Forventer man ikke at benytte overnatningsfaciliteterne, bedes i tage kontakt til mig forud for S.U., da jeg skal lave en plan for hvem som skal sove hvor.
       Arrangementet starter officielt lørdag d. 24/6 kl 11:00, på Løkken strand. Dog er alle velkomne på Havregaarden allerede d. 23/6, fra kl 16:00. 
       Man skal selv sørge for transport til og fra stranden, der går busser, men ellers kan man indbyrdes aftale transport. 
       På stranden vil der være mulighed for at surfe (med instruktør på), der er dog tilmelding til surf senest d. 16/6. 

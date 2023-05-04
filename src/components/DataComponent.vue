@@ -10,16 +10,20 @@ import type { Family } from '@/models/Family';
 import type { Guest } from '@/models/Guest';
 import CollectionNames from '@/models/CollectionNames';
 import type Event from '@/models/Event';
+import useLocationStore from '@/stores/location';
+import type Location from '@/models/Location';
 
 const db = useFirestore()
 const allergiesDBResult = useDocument<Allergies>(doc(collection(db, CollectionNames.Allergies), import.meta.env.VITE_FIREBASE_ALLERGIESID))
 const familiesDBResult = useCollection<Family>(collection(db, CollectionNames.Family))
 const guestsDBResult = useCollection<Guest>(collection(db, CollectionNames.Guest))
 const eventDBResult = useCollection<Event>(collection(db, CollectionNames.Event))
+const locationDBResult = useCollection<Location>(collection(db, CollectionNames.Location))
 
 const familyStore = useFamilyStore()
 const guestStore = useGuestStore()
 const eventStore = useEventStore()
+const locationStore = useLocationStore()
 
 watch(allergiesDBResult, (newValue, oldValue) => {
     if (newValue != oldValue && newValue) {
@@ -39,6 +43,11 @@ watch(guestsDBResult, (newValue, oldValue) => {
 watch(eventDBResult, (newValue, oldValue) => {
     if (newValue != oldValue) {
         eventStore.populateEventFromDbData(newValue)
+    }
+})
+watch(locationDBResult, (newValue, oldValue) => {
+    if (newValue != oldValue) {
+        locationStore.populateEventFromDbData(newValue)
     }
 })
 </script>
