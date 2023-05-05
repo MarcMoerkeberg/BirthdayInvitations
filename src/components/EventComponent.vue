@@ -2,8 +2,8 @@
 import { isMobile } from '@/helpers/EnviorementHelper';
 import routes from '@/models/componentModels/Routes';
 import { computed } from 'vue';
-import type Event from '@/models/Event';
 import useEventStore from '@/stores/event';
+import { formatDateRange } from '@/helpers/DateHelper';
 
 interface EventProps {
     registration?: true
@@ -15,6 +15,15 @@ const isMobileDevice = isMobile()
 
 const eventStore = useEventStore()
 const event = computed(() => { return eventStore.$state.event })
+const eventSubtitle = computed(() => {
+    let dateRange: string = '';
+
+    if (event.value.BeginDate) {
+        dateRange = formatDateRange(event.value.BeginDate, event.value.EndDate)
+    }
+
+    return `${event.value.Subtitle} ${dateRange}`
+})
 
 const actionButtons = computed(() => {
     let allButtons = [
@@ -28,7 +37,7 @@ const actionButtons = computed(() => {
 
 <template>
     <v-card :title="event.Name"
-            :subtitle="event.Subtitle">
+            :subtitle="eventSubtitle">
         <v-card-text v-html="event.Description" />
         <v-row v-if="!isMobileDevice && actionButtons.length > 0"
                justify="space-evenly"

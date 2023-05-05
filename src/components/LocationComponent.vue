@@ -3,6 +3,7 @@ import routes from '@/models/componentModels/Routes';
 import type Location from '../models/Location'
 import { computed } from 'vue';
 import { isMobile } from '@/helpers/EnviorementHelper';
+import { formatFullDate } from '@/helpers/DateHelper';
 
 interface LocationProps {
     location: Location
@@ -26,12 +27,20 @@ const actionButtons = computed(() => {
     ]
 
     return allButtons.filter(button => button.show)
+})
+const subtitle = computed(() => {
+    let subtitle = props.location.Subtitle
+    if (props.location.BeginDate && !props.location.Subtitle) {
+        subtitle = formatFullDate(props.location.BeginDate)
+    }
+
+    return subtitle
 }) 
 </script>
 
 <template>
     <v-card :title="props.location.Name"
-            :subtitle="props.location.Subtitle">
+            :subtitle="subtitle">
         <v-card-text v-html="props.location.Description" />
 
         <v-row justify="space-evenly"

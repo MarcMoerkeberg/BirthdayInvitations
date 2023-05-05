@@ -2,6 +2,7 @@ import type Allergies from "@/models/Allergies"
 import type Event from "@/models/Event"
 import type { Family } from "@/models/Family"
 import type { Guest } from "@/models/Guest"
+import type Location from "@/models/Location"
 import type { VueDatabaseDocumentData, VueFirestoreDocumentData, VueFirestoreQueryData } from "vuefire"
 
 const fireStoreMappers = {
@@ -40,6 +41,16 @@ const fireStoreMappers = {
         }) as Array<Event>
 
         return mappedEvents[0]
+    },
+    mapToLocationFromDB(dbEventData: VueFirestoreQueryData<Location>): Array<Location> {
+        const mappedLocations = dbEventData.map((event: VueDatabaseDocumentData<Location>) => {
+            return {
+                ...event,
+                Id: event?.id
+            }
+        }) as Array<Location>
+
+        return mappedLocations
     },
 }
 

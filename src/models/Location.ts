@@ -1,3 +1,5 @@
+import type { Timestamp } from "firebase/firestore"
+
 interface Location {
     Id: string
     Name: string
@@ -6,7 +8,8 @@ interface Location {
     Description: string
     Subtitle?: string
     GooglePlaceId?: string
-    AdmissionDate?: Date
+    AdmissionDate?: Timestamp
+    BeginDate: Timestamp
 }
 
 export default Location
