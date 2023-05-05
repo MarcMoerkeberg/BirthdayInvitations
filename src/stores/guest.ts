@@ -4,9 +4,10 @@ import { useFirestore, type VueFirestoreDocumentData, type VueFirestoreQueryData
 import type Allergies from '@/models/Allergies'
 import type { Guest, NewGuest } from '@/models/Guest'
 import type { Family } from '@/models/Family'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import CollectionNames from '@/models/CollectionNames'
 import useFamilyStore from './family'
+import type { AttendingType } from '@/models/componentModels/AttendingType'
 
 interface GuestState {
   guests: Guest[],
@@ -45,7 +46,19 @@ const useGuestStore = defineStore({
       }
 
       return dbSuccess
-    }
+    },
+    async updateGuestAttending(guest: Guest, attending: Array<AttendingType>): Promise<void> {
+      const db = useFirestore()
+      const guestDocRef = doc(db, CollectionNames.Guest, guest.Id)
+
+      await updateDoc(guestDocRef, { Attending: attending })
+    },
+    async updateGuestAllergies(guest: Guest, allergies: Array<string>): Promise<void> {
+      const db = useFirestore()
+      const guestDocRef = doc(db, CollectionNames.Guest, guest.Id)
+
+      await updateDoc(guestDocRef, { Allergies: allergies })
+    },
   },
 
   getters: {

@@ -1,6 +1,7 @@
 /* @import './base.css'; */
 :root {
     --minus-vuetify-app-bar-margin: -64px;
+    --vuetify-app-bar-margin: 64px;
     --theme-background-alpha: rgba(15, 39, 54, 0.8);
     --vuetify-secondary: #f8ab32;
 }
@@ -12,6 +13,10 @@
 .action-btn {
     margin: 20px 20px 20px 0px;
     float: right;
+}
+
+.overflow-hidden {
+    overflow: hidden;
 }
 
 .padding-x-10p {
@@ -72,6 +77,10 @@
     100% {
         opacity: 1;
     }
+}
+
+.margin-bottom-20p {
+    margin-bottom: 20px;
 }
 
 /* #7986CB - Fed farve! */

@@ -1,13 +1,13 @@
-import type Guest from "./Guest";
 import type User from "./User";
 
-interface Birthday {
+interface Event {
+    Name: string,
+    Subtitle?: string,
     BeginDate: Date,
     EndDate: Date,
     PartyDate: Date,
-    BirthdayUser: User,
     Description: string,
-    Guests: Guest[]
+    EventResposible?: Array<User>,
 }
 
-export default Birthday
+export default Event

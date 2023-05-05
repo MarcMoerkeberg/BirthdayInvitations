@@ -2,14 +2,14 @@ export interface RouteDetails {
     Title: string
     Route: string
     IsHiddenRoute: boolean
+    Icon: string | undefined
 }
 
 
 interface IRoute {
-    Event: RouteDetails
     Registration: RouteDetails
     Menu: RouteDetails
-    Details: RouteDetails
+    Invitation: RouteDetails
     Admin: RouteDetails
     LandingPage: RouteDetails
     Login: RouteDetails
@@ -18,13 +18,12 @@ interface IRoute {
 }
 
 const routes: IRoute = {
-    Event: { Title: 'Begivenheder', Route: '/events', IsHiddenRoute: false },
-    Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false },
-    Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false },
-    Details: { Title: 'Detaljer', Route: '/details', IsHiddenRoute: false },
-    Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true },
-    LandingPage: { Title: '', Route: '/', IsHiddenRoute: true },
-    Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true },
+    Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false, Icon: 'mdi-account-plus' },
+    Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false, Icon: 'mdi-silverware-fork-knife' },
+    Invitation: { Title: 'Invitation', Route: '/invitation', IsHiddenRoute: false, Icon: undefined },
+    Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true, Icon: undefined },
+    LandingPage: { Title: '', Route: '/', IsHiddenRoute: true, Icon: undefined },
+    Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true, Icon: undefined },
     getNonHiddenRouteDetails: getNonHiddenRouteDetails,
     getHeroButtonsRouteDetails: getHeroButtonsRouteDetails
 }
@@ -48,9 +47,9 @@ function getNonHiddenRouteDetails(): Array<RouteDetails> {
 
 function getHeroButtonsRouteDetails(): Array<RouteDetails> {
     var heroBtnDetails: Array<RouteDetails> = []
-    heroBtnDetails.push(routes.Menu)
+    heroBtnDetails.push(routes.Invitation)
     heroBtnDetails.push(routes.Registration)
-    heroBtnDetails.push(routes.Details)
+    heroBtnDetails.push(routes.Menu)
 
     return heroBtnDetails
 }

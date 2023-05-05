@@ -18,4 +18,8 @@ const isMobileDevice = isMobile()
   </v-app>
 </template>
 
-<style scoped></style>
+<!-- <style>
+html {
+  overflow-y: hidden;
+}
+</style> -->

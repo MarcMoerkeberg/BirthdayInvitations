@@ -1,7 +1,9 @@
 enum CollectionNames {
     Family = 'Families',
     Guest = 'Guests',
-    Allergies = 'Allergies'
+    Allergies = 'Allergies',
+    Event = 'Event',
+    Location = 'Locations'
 }
 
 export default CollectionNames

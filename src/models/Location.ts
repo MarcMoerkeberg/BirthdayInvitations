@@ -1,6 +1,12 @@
 interface Location {
+    Id: string
     Name: string
-    WebAddress?: string
+    Website?: string
     Address: string
-    Geolocation: string[]
+    Description: string
+    Subtitle?: string
+    GooglePlaceId?: string
+    AdmissionDate?: Date
 }
+
+export default Location

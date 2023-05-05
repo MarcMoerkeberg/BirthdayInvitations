@@ -17,7 +17,7 @@
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
     "vuefire": "^3.1.0",
-    "vuetify": "npm:@vuetify/nightly@next"
+    "vuetify": "npm:@vuetify/nightly@dev"
   },
   "devDependencies": {
     "@types/node": "^18.14.2",
