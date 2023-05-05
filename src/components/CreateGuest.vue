@@ -6,6 +6,7 @@ import useGuestStore from '@/stores/guest';
 import type ValidationReponse from '@/models/VlidationReponse';
 import type { Family } from '@/models/Family';
 import type { NewGuest } from '@/models/Guest';
+import { AttendingType } from '@/models/componentModels/AttendingType';
 
 const familieStore = useFamilyStore()
 const guestStore = useGuestStore()
@@ -30,8 +31,7 @@ var guestFirstName = ref('')
 var guestLastName = ref('')
 var selectedAllergies = ref([])
 var selectedFamily = ref<Family>()
-var attending = ref<boolean>(false);
-
+var attending = ref<Array<AttendingType>>([])
 
 async function createGuest(): Promise<void> {
     const isInputformValid: ValidationReponse = await validationForm.value?.validate()
@@ -46,6 +46,7 @@ async function createGuest(): Promise<void> {
 
         await guestStore.createNewGuest(newGuest, guestFamily)
         await validationForm.value?.reset()
+        attending.value = []
     }
 }
 </script>
@@ -56,7 +57,7 @@ async function createGuest(): Promise<void> {
             <v-card-title>Gæst</v-card-title>
             <v-divider></v-divider>
             <v-form ref="validationForm">
-                <div class="padding-x-10p">
+                <v-container>
                     <v-text-field :rules="nameValidationRules"
                                   v-model="guestFirstName"
                                   label="Fornavn" />
@@ -79,9 +80,19 @@ async function createGuest(): Promise<void> {
                               chips
                               multiple
                               clearable />
-                </div>
-                <v-checkbox v-model="attending"
-                            label="Deltager" />
+                    <v-switch v-model="attending"
+                              :value="AttendingType.Birthday"
+                              color="secondary"
+                              label="Detager på havrevang" />
+                    <v-switch v-model="attending"
+                              color="secondary"
+                              :value="AttendingType.Surf"
+                              label="Detager til surf" />
+                    <v-switch v-model="attending"
+                              color="secondary"
+                              :value="AttendingType.Lunch"
+                              label="Ønsker frokost på stranden" />
+                </v-container>
                 <v-divider></v-divider>
                 <v-btn color="success"
                        size="small"

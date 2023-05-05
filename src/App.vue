@@ -11,7 +11,7 @@ const isMobileDevice = isMobile()
   <v-app>
     <DataComponent />
     <v-main>
-      <MobileAppbar v-if="true" />
+      <MobileAppbar v-if="isMobileDevice" />
       <DesktopAppbar v-else />
       <router-view />
     </v-main>

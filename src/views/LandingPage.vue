@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { isMobile } from '@/helpers/EnviorementHelper'
 import routes from '@/models/componentModels/Routes'
-import useEventStore from '@/stores/event'
-import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import EventComponent from '@/components/EventComponent.vue'
 
