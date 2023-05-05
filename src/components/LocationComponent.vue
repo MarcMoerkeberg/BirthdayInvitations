@@ -31,8 +31,9 @@ const actionButtons = computed(() => {
 
 <template>
     <v-card :title="props.location.Name"
-            :subtitle="props.location.Subtitle"
-            :text="props.location.Description">
+            :subtitle="props.location.Subtitle">
+        <v-card-text v-html="props.location.Description" />
+
         <v-row justify="space-evenly"
                class="margin-bottom-20p">
             <v-btn v-if="isMobileDevice"

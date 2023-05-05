@@ -28,8 +28,8 @@ const actionButtons = computed(() => {
 
 <template>
     <v-card :title="event.Name"
-            :subtitle="event.Subtitle"
-            :text="event.Description">
+            :subtitle="event.Subtitle">
+        <v-card-text v-html="event.Description" />
         <v-row v-if="!isMobileDevice && actionButtons.length > 0"
                justify="space-evenly"
                class="margin-bottom-20p">
