@@ -42,7 +42,7 @@ async function createFamily(): Promise<void> {
                     <v-select label="Familiemedlemmer"
                               v-model="selectedGuestIds"
                               :items="allGuests"
-                              item-title="FirstName"
+                              :item-title="guest => `${guest.FirstName} ${guest.LastName}`"
                               item-value="Id"
                               chips
                               multiple />

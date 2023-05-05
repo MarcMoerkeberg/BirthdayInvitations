@@ -7,9 +7,6 @@ import EventComponent from '@/components/EventComponent.vue'
 const router = useRouter()
 const heroButtonRoutes = routes.getHeroButtonsRouteDetails()
 const isMobileDevice = isMobile()
-
-//Tilføj deltager til stranden/ frokost
-//Tilføj surf
 </script>
 
 <template>
