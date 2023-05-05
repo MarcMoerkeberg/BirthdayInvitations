@@ -13,8 +13,6 @@ interface RegistrationProps {
 const props = defineProps<RegistrationProps>()
 
 const guestStore = useGuestStore()
-const isMobileDevice = isMobile()
-
 const guestName = computed(() => { return `${props.guest.FirstName} ${props.guest.LastName}` })
 
 var attending = ref<Array<AttendingType>>(props.guest.Attending)
@@ -26,32 +24,30 @@ watch(selectedAllergies, () => { guestStore.updateGuestAllergies(props.guest, se
 </script>
 
 <template>
-    <v-col :cols="isMobileDevice ? 12 : 3">
-        <v-card color="primary"
-                :title="guestName">
-            <v-container>
-                <v-switch v-model="attending"
-                          density="compact"
-                          :value="AttendingType.Birthday"
-                          color="secondary"
-                          label="Detager på havrevang" />
-                <v-switch v-model="attending"
-                          density="compact"
-                          color="secondary"
-                          :value="AttendingType.Surf"
-                          label="Detager til surf" />
-                <v-switch v-model="attending"
-                          density="compact"
-                          color="secondary"
-                          :value="AttendingType.Lunch"
-                          label="Ønsker frokost på stranden" />
-                <v-select label="Allergier"
-                          v-model="selectedAllergies"
-                          :items="allAllergies.Allergies"
-                          chips
-                          multiple
-                          clearable />
-            </v-container>
-        </v-card>
-    </v-col>
+    <v-card color="primary"
+            :title="guestName">
+        <v-container>
+            <v-switch v-model="attending"
+                      density="compact"
+                      :value="AttendingType.Birthday"
+                      color="secondary"
+                      label="Detager på havrevang" />
+            <v-switch v-model="attending"
+                      density="compact"
+                      color="secondary"
+                      :value="AttendingType.Surf"
+                      label="Detager til surf" />
+            <v-switch v-model="attending"
+                      density="compact"
+                      color="secondary"
+                      :value="AttendingType.Lunch"
+                      label="Ønsker frokost på stranden" />
+            <v-select label="Allergier"
+                      v-model="selectedAllergies"
+                      :items="allAllergies.Allergies"
+                      chips
+                      multiple
+                      clearable />
+        </v-container>
+    </v-card>
 </template>
