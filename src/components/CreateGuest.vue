@@ -23,6 +23,12 @@ function getFamilyMemberNamesForHint(family: Family): string {
     return familyNames.substring(0, familyNames.length - 2)
 }
 
+function getFamilyNameForSelector(family: Family): string {
+    let familyMemberNames = getFamilyMemberNamesForHint(family)
+
+    return familyMemberNames ? `${family.Name} (${familyMemberNames})` : family.Name
+}
+
 const familyValidationRules = [(value: Family) => { return !!value.Id || 'En gæst skal være tilknyttet en familie.' }]
 const nameValidationRules = [(value: string) => { return !!value || 'En gæst skal have et for- og efternavn.' }]
 const validationForm: Ref<HTMLFormElement | undefined> = ref()
@@ -65,7 +71,7 @@ async function createGuest(): Promise<void> {
                                   v-model="guestLastName"
                                   label="Efternavn" />
                     <v-select :items="allFamilies"
-                              item-title="Name"
+                              :item-title="item => getFamilyNameForSelector(item as Family)"
                               item-value="Id"
                               label="Familie"
                               v-model="selectedFamily"
