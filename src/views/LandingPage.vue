@@ -2,16 +2,13 @@
 import { isMobile } from '@/helpers/EnviorementHelper'
 import routes from '@/models/componentModels/Routes'
 import useEventStore from '@/stores/event'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import EventComponent from '@/components/EventComponent.vue'
 
-
-const eventStore = useEventStore()
 const router = useRouter()
 const heroButtonRoutes = routes.getHeroButtonsRouteDetails()
 const isMobileDevice = isMobile()
-const eventDescription = computed(() => { return eventStore.$state.event.Description })
-
 
 //Tilføj deltager til stranden/ frokost
 //Tilføj surf
@@ -29,10 +26,7 @@ const eventDescription = computed(() => { return eventStore.$state.event.Descrip
          class="overlap-banner horizontal-center">
     <v-col cols="6"
            offset="5">
-      <v-card title="Invitation"
-              v-show="eventDescription"
-              subtitle="Marc's 30 års fødselsdag d. 23-25 Juni."
-              :text="eventDescription" />
+      <EventComponent />
     </v-col>
   </v-row>
 

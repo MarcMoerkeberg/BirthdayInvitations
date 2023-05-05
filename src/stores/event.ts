@@ -31,7 +31,16 @@ const useEventStore = defineStore({
       Glæder mig til at se jer alle i weekenden d. 23-25 Juni. 
       Kærlige hilsener fra Marc`
 
-      this.event = { Description: invitation } as Event
+      const event: Event = {
+        BeginDate: new Date,
+        EndDate: new Date,
+        PartyDate: new Date,
+        Name: 'Invitation',
+        Subtitle: 'Marcs 30 års fødselsdag d. 23-25 Juni.',
+        Description: invitation
+      }
+
+      this.event = event
     }
   },
 

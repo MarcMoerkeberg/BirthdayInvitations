@@ -3,27 +3,26 @@ import routes from '@/models/componentModels/Routes';
 import type Location from '../models/Location'
 import { computed } from 'vue';
 import { isMobile } from '@/helpers/EnviorementHelper';
-import { onMounted } from 'vue';
 
 interface LocationProps {
-    Location: Location
-    Registration?: true
-    GoogleMaps?: true
-    Website?: true
+    location: Location
+    registration?: true
+    googleMaps?: true
+    website?: true
 }
 const props = defineProps<LocationProps>();
 
 const isMobileDevice = isMobile()
 
 /* Used for googles api map search, from docs as of 04.05.2023 - https://developers.google.com/maps/documentation/urls/get-started*/
-const addressQuery = computed(() => { return props.Location.Address.replace(' ', '+').replace(',', '%2C') })
-const googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${addressQuery}&query_place_id=${props.Location.GooglePlaceId}`;
+const addressQuery = computed(() => { return props.location.Address.replace(' ', '+').replace(',', '%2C') })
+const googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${addressQuery}&query_place_id=${props.location.GooglePlaceId}`;
 
 const actionButtons = computed(() => {
     let allButtons = [
-        { title: 'Tilmelding', show: props.Registration, icon: routes.Registration.Icon, link: routes.Registration.Route },
-        { title: 'Google maps', show: props.GoogleMaps, icon: 'mdi-map-marker', link: googleMapsLink },
-        { title: 'Besøg webside', show: props.Website, icon: 'mdi-open-in-new', link: props.Location.Website },
+        { title: routes.Registration.Title, show: props.registration, icon: routes.Registration.Icon, link: routes.Registration.Route },
+        { title: 'Google maps', show: props.googleMaps, icon: 'mdi-map-marker', link: googleMapsLink },
+        { title: 'Besøg webside', show: props.website, icon: 'mdi-open-in-new', link: props.location.Website },
     ]
 
     return allButtons.filter(button => button.show)
@@ -31,10 +30,11 @@ const actionButtons = computed(() => {
 </script>
 
 <template>
-    <v-card :title="props.Location.Name"
-            :subtitle="props.Location.Subtitle"
-            :text="props.Location.Description">
-        <v-row justify="space-evenly">
+    <v-card :title="props.location.Name"
+            :subtitle="props.location.Subtitle"
+            :text="props.location.Description">
+        <v-row justify="space-evenly"
+               class="margin-bottom-20p">
             <v-btn v-if="isMobileDevice"
                    v-for="button in actionButtons"
                    :key="button.title + '-mobile'"
@@ -52,10 +52,3 @@ const actionButtons = computed(() => {
         </v-row>
     </v-card>
 </template>
-
-<style scoped>
-.v-row {
-    gap: 30px;
-    margin-bottom: 20px;
-}
-</style>
