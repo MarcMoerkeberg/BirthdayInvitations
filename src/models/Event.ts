@@ -1,13 +1,12 @@
-import type User from "./User";
+import type { Timestamp } from "firebase/firestore"
 
 interface Event {
-    Name: string,
-    Subtitle?: string,
-    BeginDate: Date,
-    EndDate: Date,
-    PartyDate: Date,
-    Description: string,
-    EventResposible?: Array<User>,
+    Id: string
+    Name: string
+    Subtitle?: string
+    BeginDate: Timestamp
+    EndDate: Timestamp
+    Description: string
 }
 
 export default Event

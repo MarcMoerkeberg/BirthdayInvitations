@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { AttendingType } from '@/models/componentModels/AttendingType';
-import { isMobile } from '@/helpers/EnviorementHelper';
 import type { Guest } from '@/models/Guest';
 import { computed } from 'vue';
 import { watch } from 'vue';

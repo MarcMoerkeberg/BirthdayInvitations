@@ -1,4 +1,5 @@
 import type Allergies from "@/models/Allergies"
+import type Event from "@/models/Event"
 import type { Family } from "@/models/Family"
 import type { Guest } from "@/models/Guest"
 import type { VueDatabaseDocumentData, VueFirestoreDocumentData, VueFirestoreQueryData } from "vuefire"
@@ -29,6 +30,16 @@ const fireStoreMappers = {
             Id: dbAllergyData?.id,
             Allergies: dbAllergyData?.Allergies ?? []
         } as Allergies
+    },
+    mapToEventFromDB(dbEventData: VueFirestoreQueryData<Event>): Event {
+        const mappedEvents = dbEventData.map((event: VueDatabaseDocumentData<Event>) => {
+            return {
+                ...event,
+                Id: event?.id
+            }
+        }) as Array<Event>
+
+        return mappedEvents[0]
     },
 }
 
