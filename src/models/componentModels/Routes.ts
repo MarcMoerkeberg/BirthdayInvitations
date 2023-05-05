@@ -7,7 +7,6 @@ export interface RouteDetails {
 
 
 interface IRoute {
-    Event: RouteDetails
     Registration: RouteDetails
     Menu: RouteDetails
     Invitation: RouteDetails
@@ -19,7 +18,6 @@ interface IRoute {
 }
 
 const routes: IRoute = {
-    Event: { Title: 'Begivenheder', Route: '/events', IsHiddenRoute: false, Icon: undefined },
     Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false, Icon: 'mdi-account-plus' },
     Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false, Icon: 'mdi-silverware-fork-knife' },
     Invitation: { Title: 'Invitation', Route: '/invitation', IsHiddenRoute: false, Icon: undefined },

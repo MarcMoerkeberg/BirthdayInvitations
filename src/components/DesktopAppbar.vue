@@ -30,11 +30,11 @@ onMounted(() => { window.addEventListener("scroll", () => { currentWindowYPositi
 <style scoped>
 .img-center-before-titles {
     /*Obviously this i stupid. But I'm not better than this, or rather, timecrunch i real right now. */
-    margin-left: calc(100% - 73%);
+    margin-left: calc(100% - 67%);
 }
 
 .calc-left-margin-center {
-    margin-left: calc(100% - 68%);
+    margin-left: calc(100% - 60%);
 }
 
 .v-app-bar {

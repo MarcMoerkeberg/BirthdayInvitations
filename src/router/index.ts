@@ -5,7 +5,6 @@ import Menu from '../views/Menu.vue'
 import Registration from '../views/Registration.vue'
 import Invitation from '../views/Invitation.vue'
 import Login from '@/views/Login.vue'
-import Events from '@/views/Events.vue'
 import routes from '@/models/componentModels/Routes'
 
 const router = createRouter({
@@ -35,11 +34,6 @@ const router = createRouter({
       path: routes.Invitation.Route,
       name: 'invitation',
       component: Invitation
-    },
-    {
-      path: routes.Event.Route,
-      name: 'events',
-      component: Events
     },
     {
       path: routes.Registration.Route,
