@@ -22,7 +22,7 @@ const routes: IRoute = {
     Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false, Icon: 'mdi-silverware-fork-knife' },
     Invitation: { Title: 'Invitation', Route: '/invitation', IsHiddenRoute: false, Icon: undefined },
     Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true, Icon: undefined },
-    LandingPage: { Title: 'landing-page', Route: '/:familyId?', IsHiddenRoute: true, Icon: undefined },
+    LandingPage: { Title: 'landing-page', Route: '/', IsHiddenRoute: true, Icon: undefined },
     Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true, Icon: undefined },
     getNonHiddenRouteDetails: getNonHiddenRouteDetails,
     getHeroButtonsRouteDetails: getHeroButtonsRouteDetails
