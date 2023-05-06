@@ -39,7 +39,7 @@ const useGuestStore = defineStore({
 
       if (dbSuccess) {
         const familyStore = useFamilyStore()
-        await familyStore.addFamilyMemberId(family, dbResult.id)
+        await familyStore.addFamilyMember(family, dbResult.id)
 
         const createdGuest: Guest = { ...newGuest, Id: dbResult.id }
         this.guests.push(createdGuest)
