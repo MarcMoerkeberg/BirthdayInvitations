@@ -12,7 +12,7 @@ const router = createRouter({
   routes: [
     {
       path: routes.LandingPage.Route,
-      name: 'landing-page',
+      name: routes.LandingPage.Title,
       component: LandingPage
     },
     {

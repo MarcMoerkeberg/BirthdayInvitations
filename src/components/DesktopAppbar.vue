@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router';
 const currentWindowYPosition = ref<number>(window.scrollY || document.documentElement.scrollTop)
 const router = useRouter()
 const navigationRoutes = routes.getNonHiddenRouteDetails()
-const transparentAppBar = computed(() => { return currentWindowYPosition.value < 200 && router.currentRoute.value.path === routes.LandingPage.Route })
+const transparentAppBar = computed(() => { return currentWindowYPosition.value < 200 && router.currentRoute.value.name === routes.LandingPage.Title })
 
 onMounted(() => { window.addEventListener("scroll", () => { currentWindowYPosition.value = window.scrollY || document.documentElement.scrollTop }) })
 </script>
