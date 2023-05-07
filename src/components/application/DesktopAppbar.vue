@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import routes from '@/models/componentModels/Routes';
+import routes, { type RouteDetails } from '@/models/componentModels/Routes';
 import { computed, ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const currentWindowYPosition = ref<number>(window.scrollY || document.documentElement.scrollTop)
-const router = useRouter()
-const navigationRoutes = computed(() => { return routes.getNonHiddenRouteDetails() })
-const transparentAppBar = computed(() => { return currentWindowYPosition.value < 200 && router.currentRoute.value.name === routes.LandingPage.Title })
+const props = defineProps<{ navigationRoutes: Array<RouteDetails> }>()
 
+const router = useRouter()
+
+const currentWindowYPosition = ref<number>(window.scrollY || document.documentElement.scrollTop)
+const transparentAppBar = computed(() => { return currentWindowYPosition.value < 200 && router.currentRoute.value.name === routes.LandingPage.Title })
 onMounted(() => { window.addEventListener("scroll", () => { currentWindowYPosition.value = window.scrollY || document.documentElement.scrollTop }) })
 </script>
 
@@ -21,9 +22,9 @@ onMounted(() => { window.addEventListener("scroll", () => { currentWindowYPositi
                  width="50"
                  @click="router.push(routes.LandingPage.Route)">
         </span>
-        <v-app-bar-title v-for="route in navigationRoutes"
+        <v-app-bar-title v-for="route in props.navigationRoutes"
                          :text="route.Title"
-                         :class="['cursor-pointer', { 'calc-left-margin-center': navigationRoutes.indexOf(route) < 1 }]"
+                         :class="['cursor-pointer', { 'calc-left-margin-center': props.navigationRoutes.indexOf(route) < 1 }]"
                          @click="router.push(route.Route)" />
     </v-app-bar>
 </template>

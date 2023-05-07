@@ -3,11 +3,13 @@ import RegistrationComponent from '@/components/RegistrationComponent.vue';
 import { isMobile } from '@/helpers/EnviorementHelper';
 import useGuestStore from '@/stores/guest';
 import { computed } from 'vue';
+import { useCurrentUser } from 'vuefire';
 
 const isMobileDevice = isMobile()
 
 const guestStore = useGuestStore()
-const allGuests = computed(() => { return guestStore.getGuestsAssociatedWithCurrentFamily })
+const currentUser = useCurrentUser()
+const allGuests = computed(() => { return currentUser ? guestStore.$state.guests : guestStore.getGuestsAssociatedWithCurrentFamily })
 </script>
 
 <template>

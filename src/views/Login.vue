@@ -1,17 +1,18 @@
 <script setup lang="ts">
+import routes from '@/models/componentModels/Routes';
 import { signInWithEmailAndPassword, type Auth } from 'firebase/auth';
 import { watch, type Ref } from 'vue';
 import { computed } from 'vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useFirebaseAuth } from 'vuefire';
+import { useCurrentUser, useFirebaseAuth } from 'vuefire';
 
 const router = useRouter()
+const auth = useFirebaseAuth() ?? {} as Auth
 
 async function login() {
     try {
         loading.value = true
-        const auth = useFirebaseAuth() ?? {} as Auth
         await validationForm.value?.validate()
         await signInWithEmailAndPassword(auth, username.value ?? '', password.value ?? '')
         router.push('/adminoverview')
@@ -20,6 +21,13 @@ async function login() {
     }
     finally {
         loading.value = false
+    }
+}
+async function logout() {
+    try {
+        await auth.signOut()
+        router.push(routes.LandingPage.Route)
+    } catch (error) {
     }
 }
 
@@ -65,6 +73,8 @@ const loginErrorMessage = computed(() => { return hideLoginErrorMessage.value ? 
                 <v-divider></v-divider>
                 <v-btn class="login-btn"
                        @click="login">Login</v-btn>
+                <v-btn class="login-btn"
+                       @click="logout">Logout</v-btn>
             </v-card>
         </v-col>
     </div>

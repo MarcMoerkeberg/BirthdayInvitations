@@ -1,10 +1,11 @@
 import useFamilyStore from "@/stores/family"
+import { useCurrentUser } from "vuefire"
 
 export interface RouteDetails {
     Title: string
     Route: string
     Icon: string | undefined
-    ShowRoute: () => boolean
+    ShowRoute: (isAuthorizedAsAdmin?: boolean) => boolean
 }
 
 interface IRoute {
@@ -14,37 +15,37 @@ interface IRoute {
     Admin: RouteDetails
     LandingPage: RouteDetails
     Login: RouteDetails
-    getNonHiddenRouteDetails(): Array<RouteDetails>
+    getNonHiddenRouteDetails(isAuthorizedAsAdmin?: boolean): Array<RouteDetails>
     getHeroButtonsRouteDetails(): Array<RouteDetails>
 }
 
 const routes: IRoute = {
-    Registration: { Title: 'Tilmelding', Route: '/registration', Icon: 'mdi-account-plus', ShowRoute: () => showRoute('Tilmelding') },
-    Menu: { Title: 'Menu', Route: '/menu', Icon: 'mdi-silverware-fork-knife', ShowRoute: () => showRoute('Menu') },
-    Invitation: { Title: 'Invitation', Route: '/invitation', Icon: undefined, ShowRoute: () => showRoute('Invitation') },
-    Admin: { Title: 'Admin', Route: '/adminoverview', Icon: undefined, ShowRoute: () => showRoute('Admin') },
-    LandingPage: { Title: 'LandingPage', Route: '/', Icon: undefined, ShowRoute: () => showRoute('LandingPage') },
-    Login: { Title: 'Login', Route: '/login', Icon: undefined, ShowRoute: () => showRoute('Login') },
-    getNonHiddenRouteDetails: getNonHiddenRouteDetails,
+    Registration: { Title: 'Tilmelding', Route: '/registration', Icon: 'mdi-account-plus', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Tilmelding', isAuthorizedAsAdmin) },
+    Menu: { Title: 'Menu', Route: '/menu', Icon: 'mdi-silverware-fork-knife', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Menu', isAuthorizedAsAdmin) },
+    Invitation: { Title: 'Invitation', Route: '/invitation', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Invitation', isAuthorizedAsAdmin) },
+    Admin: { Title: 'Admin', Route: '/adminoverview', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Admin', isAuthorizedAsAdmin) },
+    LandingPage: { Title: 'LandingPage', Route: '/', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('LandingPage', isAuthorizedAsAdmin) },
+    Login: { Title: 'Login', Route: '/login', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Login', isAuthorizedAsAdmin) },
+    getNonHiddenRouteDetails: (isAuthorizedAsAdmin?: boolean) => getNonHiddenRouteDetails(isAuthorizedAsAdmin),
     getHeroButtonsRouteDetails: getHeroButtonsRouteDetails,
 }
 
-const isRouteDetails = (input: string | RouteDetails) => input.valueOf().hasOwnProperty('Route')
 
-function getNonHiddenRouteDetails(): Array<RouteDetails> {
+function getNonHiddenRouteDetails(isAuthorizedAsAdmin?: boolean): Array<RouteDetails> {
     var allNonHiddenRoutes: Array<RouteDetails> = []
     const routePropsAsArray: Array<Array<string | RouteDetails>> = Object.entries(routes)
 
     routePropsAsArray.forEach(propertyArray => {
         const routeDetails = propertyArray.find(property => isRouteDetails(property)) as RouteDetails
 
-        if (routeDetails && routeDetails.ShowRoute()) {
+        if (routeDetails && routeDetails.ShowRoute(isAuthorizedAsAdmin)) {
             allNonHiddenRoutes.push(routeDetails)
         }
     })
 
     return allNonHiddenRoutes
 }
+const isRouteDetails = (input: string | RouteDetails) => input.valueOf().hasOwnProperty('Route')
 
 function getHeroButtonsRouteDetails(): Array<RouteDetails> {
     var heroBtnDetails: Array<RouteDetails> = []
@@ -59,12 +60,12 @@ function getHeroButtonsRouteDetails(): Array<RouteDetails> {
     return heroBtnDetails
 }
 
-function showRoute(routeTitle: string): boolean {
+function showRoute(routeTitle: string, authorizedAdminUser?: boolean): boolean {
     const familyStore = useFamilyStore()
 
     switch (routeTitle) {
         case routes.Admin.Title:
-            return false
+            return !!authorizedAdminUser
         case routes.LandingPage.Title:
             return false
         case routes.Login.Title:
@@ -74,7 +75,7 @@ function showRoute(routeTitle: string): boolean {
         case routes.Invitation.Title:
             return true
         case routes.Registration.Title:
-            return familyStore.familyId !== undefined
+            return familyStore.familyId !== undefined || !!authorizedAdminUser
         default:
             return false;
     }
