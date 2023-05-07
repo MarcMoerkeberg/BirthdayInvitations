@@ -3,10 +3,12 @@ import routes, { type RouteDetails } from '@/models/componentModels/Routes';
 import { computed, ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-
-const props = defineProps<{ navigationRoutes: Array<RouteDetails> }>()
+import { useCurrentUser } from 'vuefire';
 
 const router = useRouter()
+
+const currentUser = useCurrentUser()
+const navigationRoutes = computed(() => { return routes.getNonHiddenRouteDetails(!!currentUser.value) })
 
 const currentWindowYPosition = ref<number>(window.scrollY || document.documentElement.scrollTop)
 const transparentAppBar = computed(() => { return currentWindowYPosition.value < 200 && router.currentRoute.value.name === routes.LandingPage.Title })
@@ -22,9 +24,9 @@ onMounted(() => { window.addEventListener("scroll", () => { currentWindowYPositi
                  width="50"
                  @click="router.push(routes.LandingPage.Route)">
         </span>
-        <v-app-bar-title v-for="route in props.navigationRoutes"
+        <v-app-bar-title v-for="route in navigationRoutes"
                          :text="route.Title"
-                         :class="['cursor-pointer', { 'calc-left-margin-center': props.navigationRoutes.indexOf(route) < 1 }]"
+                         :class="['cursor-pointer', { 'calc-left-margin-center': navigationRoutes.indexOf(route) < 1 }]"
                          @click="router.push(route.Route)" />
     </v-app-bar>
 </template>

@@ -7,14 +7,10 @@ import { useRouter } from 'vue-router';
 import { watch } from 'vue';
 import useFamilyStore from './stores/family'
 import LocalStorageKey from './models/componentModels/LocalStorageKey';
-import { getCurrentUser } from 'vuefire';
-import routes, { type RouteDetails } from './models/componentModels/Routes';
-import { ref } from 'vue';
 
 const isMobileDevice = isMobile()
 const router = useRouter()
 const familyStore = useFamilyStore()
-const navigationRoutes = ref<Array<RouteDetails>>(routes.getNonHiddenRouteDetails())
 
 watch(router.currentRoute, async (newValue) => {
   const familyIdFromRouteParams = newValue.params.familyId
@@ -26,9 +22,6 @@ watch(router.currentRoute, async (newValue) => {
   else if (familyIdFromRouteParams) {
     familyStore.setFamilyId(Array.isArray(familyIdFromRouteParams) ? familyIdFromRouteParams[0] : familyIdFromRouteParams)
   }
-
-  const isAdminUser: boolean = !!await getCurrentUser()
-  navigationRoutes.value = routes.getNonHiddenRouteDetails(isAdminUser)
 })
 </script>
 
@@ -37,8 +30,7 @@ watch(router.currentRoute, async (newValue) => {
     <DataComponent />
     <v-main>
       <MobileAppbar v-if="isMobileDevice" />
-      <DesktopAppbar :navigation-routes="navigationRoutes"
-                     v-else />
+      <DesktopAppbar v-else />
       <router-view />
     </v-main>
   </v-app>
