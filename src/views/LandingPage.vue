@@ -22,7 +22,9 @@ const isMobileDevice = isMobile()
          class="overlap-banner horizontal-center">
     <v-col cols="6"
            offset="5">
-      <EventComponent />
+      <EventComponent wishlist
+                      menu
+                      registration />
     </v-col>
   </v-row>
 

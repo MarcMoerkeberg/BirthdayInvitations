@@ -4,6 +4,7 @@ import type Location from '../models/Location'
 import { computed } from 'vue';
 import { isMobile } from '@/helpers/EnviorementHelper';
 import { formatFullDate } from '@/helpers/DateHelper';
+import { useCurrentUser } from 'vuefire';
 
 interface LocationProps {
     location: Location
@@ -19,9 +20,10 @@ const isMobileDevice = isMobile()
 const addressQuery = computed(() => { return props.location.Address.replace(' ', '+').replace(',', '%2C') })
 const googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${addressQuery}&query_place_id=${props.location.GooglePlaceId}`;
 
+const currentUser = useCurrentUser()
 const actionButtons = computed(() => {
     let allButtons = [
-        { title: routes.Registration.Title, show: props.registration && routes.Registration.ShowRoute(), icon: routes.Registration.Icon, link: routes.Registration.Route },
+        { title: routes.Registration.Title, show: props.registration && routes.Registration.ShowRoute(!!currentUser.value), icon: routes.Registration.Icon, link: routes.Registration.Route },
         { title: 'Google maps', show: props.googleMaps, icon: 'mdi-map-marker', link: googleMapsLink },
         { title: 'Besøg webside', show: props.website, icon: 'mdi-open-in-new', link: props.location.Website },
     ]
