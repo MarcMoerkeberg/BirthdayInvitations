@@ -14,7 +14,9 @@ const isMobileDevice = isMobile()
 <template>
     <v-row class="justify-end">
         <v-col :cols="isMobileDevice ? 12 : 7">
-            <EventComponent />
+            <EventComponent :menu="isMobileDevice"
+                            :registration="isMobileDevice"
+                            :wishlist="isMobileDevice" />
         </v-col>
         <v-col v-for="location in locations"
                :key="location.Id"

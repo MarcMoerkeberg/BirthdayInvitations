@@ -9,7 +9,7 @@ const isMobileDevice = isMobile()
 
 const guestStore = useGuestStore()
 const currentUser = useCurrentUser()
-const allGuests = computed(() => { return currentUser ? guestStore.$state.guests : guestStore.getGuestsAssociatedWithCurrentFamily })
+const allGuests = computed(() => { return currentUser.value ? guestStore.$state.guests : guestStore.getGuestsAssociatedWithCurrentFamily })
 </script>
 
 <template>
