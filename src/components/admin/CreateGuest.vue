@@ -29,7 +29,6 @@ function getFamilyNameForSelector(family: Family): string {
     return familyMemberNames ? `${family.Name} (${familyMemberNames})` : family.Name
 }
 
-const familyValidationRules = [(value: Family) => { return !!value.Id || 'En gæst skal være tilknyttet en familie.' }]
 const nameValidationRules = [(value: string) => { return !!value || 'En gæst skal have et for- og efternavn.' }]
 const validationForm: Ref<HTMLFormElement | undefined> = ref()
 
@@ -78,8 +77,7 @@ async function createGuest(): Promise<void> {
                               clearable
                               return-object
                               :hint="familyHint"
-                              persistent-hint
-                              :rules="familyValidationRules" />
+                              persistent-hint />
                     <v-select label="Allergier"
                               v-model="selectedAllergies"
                               :items="allAllergies.Allergies"
