@@ -7,9 +7,9 @@ import { formatDateRange } from '@/helpers/DateHelper';
 import { useCurrentUser } from 'vuefire';
 
 interface EventProps {
-    registration?: true
-    menu?: true
-    wishlist?: true
+    registration?: boolean
+    menu?: boolean
+    wishlist?: boolean
 }
 const props = defineProps<EventProps>()
 
@@ -30,9 +30,9 @@ const eventSubtitle = computed(() => {
 const currentUser = useCurrentUser()
 const actionButtons = computed(() => {
     let allButtons = [
+        /* The reason why wishlist is not here is because it has to be a href, and it looks kinda stupid that it disappears and reappears (bc route validation) */
         { ...routes.Registration, show: props.registration && routes.Registration.ShowRoute(!!currentUser.value) },
-        { ...routes.Menu, show: props.menu },
-        { Route: 'https://onskeskyen.dk/s/YlbRs', Icon: 'mdi-gift-outline', Title: 'Ønsker', show: props.wishlist },
+        { ...routes.Menu, show: props.menu }
     ]
 
     return allButtons.filter(button => button.show)
@@ -44,7 +44,7 @@ const actionButtons = computed(() => {
             :subtitle="eventSubtitle"
             v-show="event.Id">
         <v-card-text v-html="event.Description" />
-        <v-row v-if="!isMobileDevice && actionButtons.length > 0"
+        <v-row v-if="!isMobileDevice && (actionButtons.length > 0 || props.wishlist)"
                justify="space-evenly"
                class="margin-bottom-20p">
             <v-btn v-for="button in actionButtons"
@@ -52,11 +52,16 @@ const actionButtons = computed(() => {
                    size="large"
                    color="secondary"
                    :prepend-icon="button.Icon"
-                   :href="button.Route"> {{ button.Title }} </v-btn>
+                   :to="button.Route"> {{ button.Title }} </v-btn>
+            <v-btn v-show="props.wishlist"
+                   size="large"
+                   color="secondary"
+                   prepend-icon="mdi-gift-outline"
+                   href="https://onskeskyen.dk/s/YlbRs"> Ønsker </v-btn>
         </v-row>
     </v-card>
 
-    <v-row v-if="isMobileDevice && actionButtons.length > 0 && event.Id"
+    <v-row v-if="isMobileDevice && (actionButtons.length > 0 || props.wishlist) && event.Id"
            align="center"
            justify="space-evenly">
         <v-col cols="auto"
@@ -65,7 +70,13 @@ const actionButtons = computed(() => {
             <v-btn size="x-large"
                    color="secondary"
                    :icon="button.Icon"
-                   :href="button.Route" />
+                   :to="button.Route" />
+        </v-col>
+        <v-col cols="auto">
+            <v-btn size="x-large"
+                   color="secondary"
+                   icon="mdi-gift-outline"
+                   href="https://onskeskyen.dk/s/YlbRs" />
         </v-col>
     </v-row>
 </template>
