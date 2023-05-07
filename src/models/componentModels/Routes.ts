@@ -1,10 +1,11 @@
+import useFamilyStore from "@/stores/family"
+
 export interface RouteDetails {
     Title: string
     Route: string
-    IsHiddenRoute: boolean
     Icon: string | undefined
+    ShowRoute: () => boolean
 }
-
 
 interface IRoute {
     Registration: RouteDetails
@@ -18,14 +19,14 @@ interface IRoute {
 }
 
 const routes: IRoute = {
-    Registration: { Title: 'Tilmelding', Route: '/registration', IsHiddenRoute: false, Icon: 'mdi-account-plus' },
-    Menu: { Title: 'Menu', Route: '/menu', IsHiddenRoute: false, Icon: 'mdi-silverware-fork-knife' },
-    Invitation: { Title: 'Invitation', Route: '/invitation', IsHiddenRoute: false, Icon: undefined },
-    Admin: { Title: 'Admin', Route: '/adminoverview', IsHiddenRoute: true, Icon: undefined },
-    LandingPage: { Title: 'landing-page', Route: '/', IsHiddenRoute: true, Icon: undefined },
-    Login: { Title: 'Login', Route: '/login', IsHiddenRoute: true, Icon: undefined },
+    Registration: { Title: 'Tilmelding', Route: '/registration', Icon: 'mdi-account-plus', ShowRoute: () => showRoute('Tilmelding') },
+    Menu: { Title: 'Menu', Route: '/menu', Icon: 'mdi-silverware-fork-knife', ShowRoute: () => showRoute('Menu') },
+    Invitation: { Title: 'Invitation', Route: '/invitation', Icon: undefined, ShowRoute: () => showRoute('Invitation') },
+    Admin: { Title: 'Admin', Route: '/adminoverview', Icon: undefined, ShowRoute: () => showRoute('Admin') },
+    LandingPage: { Title: 'LandingPage', Route: '/', Icon: undefined, ShowRoute: () => showRoute('LandingPage') },
+    Login: { Title: 'Login', Route: '/login', Icon: undefined, ShowRoute: () => showRoute('Login') },
     getNonHiddenRouteDetails: getNonHiddenRouteDetails,
-    getHeroButtonsRouteDetails: getHeroButtonsRouteDetails
+    getHeroButtonsRouteDetails: getHeroButtonsRouteDetails,
 }
 
 const isRouteDetails = (input: string | RouteDetails) => input.valueOf().hasOwnProperty('Route')
@@ -37,7 +38,7 @@ function getNonHiddenRouteDetails(): Array<RouteDetails> {
     routePropsAsArray.forEach(propertyArray => {
         const routeDetails = propertyArray.find(property => isRouteDetails(property)) as RouteDetails
 
-        if (routeDetails && !routeDetails.IsHiddenRoute) {
+        if (routeDetails && routeDetails.ShowRoute()) {
             allNonHiddenRoutes.push(routeDetails)
         }
     })
@@ -47,11 +48,36 @@ function getNonHiddenRouteDetails(): Array<RouteDetails> {
 
 function getHeroButtonsRouteDetails(): Array<RouteDetails> {
     var heroBtnDetails: Array<RouteDetails> = []
+
     heroBtnDetails.push(routes.Invitation)
-    heroBtnDetails.push(routes.Registration)
+
+    if (routes.Registration.ShowRoute()) {
+        heroBtnDetails.push(routes.Registration)
+    }
     heroBtnDetails.push(routes.Menu)
 
     return heroBtnDetails
+}
+
+function showRoute(routeTitle: string): boolean {
+    const familyStore = useFamilyStore()
+
+    switch (routeTitle) {
+        case routes.Admin.Title:
+            return false
+        case routes.LandingPage.Title:
+            return false
+        case routes.Login.Title:
+            return false
+        case routes.Menu.Title:
+            return true
+        case routes.Invitation.Title:
+            return true
+        case routes.Registration.Title:
+            return familyStore.familyId !== undefined
+        default:
+            return false;
+    }
 }
 
 export default routes

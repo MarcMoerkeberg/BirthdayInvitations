@@ -7,7 +7,7 @@ import { computed } from 'vue';
 const isMobileDevice = isMobile()
 
 const guestStore = useGuestStore()
-const allGuests = computed(() => { return guestStore.$state.guests })
+const allGuests = computed(() => { return guestStore.getGuestsAssociatedWithCurrentFamily })
 </script>
 
 <template>

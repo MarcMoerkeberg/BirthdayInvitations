@@ -3,9 +3,10 @@ import { isMobile } from '@/helpers/EnviorementHelper'
 import routes from '@/models/componentModels/Routes'
 import { useRouter } from 'vue-router'
 import EventComponent from '@/components/EventComponent.vue'
+import { computed } from 'vue'
 
 const router = useRouter()
-const heroButtonRoutes = routes.getHeroButtonsRouteDetails()
+const heroButtonRoutes = computed(() => { return routes.getHeroButtonsRouteDetails() })
 const isMobileDevice = isMobile()
 </script>
 

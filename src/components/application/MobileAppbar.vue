@@ -5,8 +5,8 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 const showDialog = ref<boolean>(false);
-const menuButtons = routes.getNonHiddenRouteDetails()
-const makeNavBarTransparent: ComputedRef<boolean> = computed(() => { return !showDialog.value && router.currentRoute.value.path == routes.LandingPage.Route && window.scrollY < 20 })
+const menuButtons = computed(() => { return routes.getNonHiddenRouteDetails() })
+const makeNavBarTransparent: ComputedRef<boolean> = computed(() => { return !showDialog.value && router.currentRoute.value.name == routes.LandingPage.Title && window.scrollY < 20 })
 </script>
 
 <template>
@@ -26,7 +26,7 @@ const makeNavBarTransparent: ComputedRef<boolean> = computed(() => { return !sho
                          temporary
                          style="height:100vh;">
         <div class="navigation-button-container">
-            <img src="../assets/images/crafty-champagne-cork.png"
+            <img src="../../assets/images/crafty-champagne-cork.png"
                  width="64"
                  @click="router.push(routes.LandingPage.Route)">
             <v-list-item v-for="button in menuButtons"

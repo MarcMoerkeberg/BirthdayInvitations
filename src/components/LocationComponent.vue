@@ -21,7 +21,7 @@ const googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${addres
 
 const actionButtons = computed(() => {
     let allButtons = [
-        { title: routes.Registration.Title, show: props.registration, icon: routes.Registration.Icon, link: routes.Registration.Route },
+        { title: routes.Registration.Title, show: props.registration && routes.Registration.ShowRoute(), icon: routes.Registration.Icon, link: routes.Registration.Route },
         { title: 'Google maps', show: props.googleMaps, icon: 'mdi-map-marker', link: googleMapsLink },
         { title: 'Besøg webside', show: props.website, icon: 'mdi-open-in-new', link: props.location.Website },
     ]

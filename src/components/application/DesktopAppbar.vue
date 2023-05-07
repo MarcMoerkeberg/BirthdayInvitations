@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 
 const currentWindowYPosition = ref<number>(window.scrollY || document.documentElement.scrollTop)
 const router = useRouter()
-const navigationRoutes = routes.getNonHiddenRouteDetails()
+const navigationRoutes = computed(() => { return routes.getNonHiddenRouteDetails() })
 const transparentAppBar = computed(() => { return currentWindowYPosition.value < 200 && router.currentRoute.value.name === routes.LandingPage.Title })
 
 onMounted(() => { window.addEventListener("scroll", () => { currentWindowYPosition.value = window.scrollY || document.documentElement.scrollTop }) })
@@ -17,7 +17,7 @@ onMounted(() => { window.addEventListener("scroll", () => { currentWindowYPositi
                elevation="0">
         <span class="fade-in-image overlap-banner img-center-before-titles vertical-center cursor-pointer"
               v-show="!transparentAppBar">
-            <img src="../assets/images/crafty-champagne-cork.png"
+            <img src="../../assets/images/crafty-champagne-cork.png"
                  width="50"
                  @click="router.push(routes.LandingPage.Route)">
         </span>

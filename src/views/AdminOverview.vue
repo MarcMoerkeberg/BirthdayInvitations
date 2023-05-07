@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import CreateGuest from '@/components/CreateGuest.vue';
-import CreateFamily from '@/components/CreateFamily.vue';
+import CreateGuest from '@/components/admin/CreateGuest.vue';
+import CreateFamily from '@/components/admin/CreateFamily.vue';
 </script>
 
 <template>

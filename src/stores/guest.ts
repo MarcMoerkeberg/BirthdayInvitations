@@ -73,6 +73,17 @@ const useGuestStore = defineStore({
     },
     getAllergyId: (state: GuestState): string | undefined => {
       return state.allergies.Id
+    },
+    getGuestsAssociatedWithCurrentFamily: (state: GuestState): Array<Guest> => {
+      const familyStore = useFamilyStore()
+      let guestsInFamily: Guest[] = []
+      const currentFamily: Family | undefined = familyStore.currentFamily()
+
+      if (currentFamily) {
+        guestsInFamily = state.guests.filter(guest => currentFamily.MemberIds?.find(familyMemberId => familyMemberId === guest.Id))
+      }
+
+      return guestsInFamily
     }
   }
 })
