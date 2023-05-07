@@ -12,8 +12,9 @@ const allGuests = computed(() => { return guestStore.guests })
 const nameValidationRules = [(value: string) => { return value ? true : 'En Familie skal have et navn.' }]
 const validationForm: Ref<HTMLFormElement | undefined> = ref()
 
-var selectedGuestIds = ref([])
+var selectedGuestIds = ref<Array<string>>([])
 var familyName = ref('')
+const searchInput = ref<string>('')
 
 async function createFamily(): Promise<void> {
     const isInputformValid: ValidationReponse = await validationForm.value?.validate()
@@ -39,13 +40,14 @@ async function createFamily(): Promise<void> {
                     <v-text-field :rules="nameValidationRules"
                                   v-model="familyName"
                                   label="Familienavn" />
-                    <v-select label="Familiemedlemmer"
-                              v-model="selectedGuestIds"
-                              :items="allGuests"
-                              :item-title="guest => `${guest.FirstName} ${guest.LastName}`"
-                              item-value="Id"
-                              chips
-                              multiple />
+                    <v-autocomplete v-model="selectedGuestIds"
+                                    :search="searchInput"
+                                    :items="allGuests"
+                                    :item-title="guest => `${guest.FirstName} ${guest.LastName}`"
+                                    item-value="Id"
+                                    multiple
+                                    chips
+                                    label="Familiemedlemmer" />
                 </div>
                 <v-divider></v-divider>
                 <v-btn color="success"
