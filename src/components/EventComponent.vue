@@ -4,10 +4,12 @@ import routes from '@/models/componentModels/Routes';
 import { computed } from 'vue';
 import useEventStore from '@/stores/event';
 import { formatDateRange } from '@/helpers/DateHelper';
+import { useCurrentUser } from 'vuefire';
 
 interface EventProps {
     registration?: true
     menu?: true
+    wishlist?: true
 }
 const props = defineProps<EventProps>()
 
@@ -25,10 +27,12 @@ const eventSubtitle = computed(() => {
     return `${event.value.Subtitle} ${dateRange}`
 })
 
+const currentUser = useCurrentUser()
 const actionButtons = computed(() => {
     let allButtons = [
-        { ...routes.Registration, show: props.registration },
+        { ...routes.Registration, show: props.registration && routes.Registration.ShowRoute(!!currentUser.value) },
         { ...routes.Menu, show: props.menu },
+        { Route: 'https://onskeskyen.dk/s/YlbRs', Icon: 'mdi-gift-outline', Title: 'Ønsker', show: props.wishlist },
     ]
 
     return allButtons.filter(button => button.show)
@@ -48,7 +52,7 @@ const actionButtons = computed(() => {
                    size="large"
                    color="secondary"
                    :prepend-icon="button.Icon"
-                   :to="button.Route"> {{ button.Title }} </v-btn>
+                   :href="button.Route"> {{ button.Title }} </v-btn>
         </v-row>
     </v-card>
 
@@ -61,7 +65,7 @@ const actionButtons = computed(() => {
             <v-btn size="x-large"
                    color="secondary"
                    :icon="button.Icon"
-                   :to="button.Route" />
+                   :href="button.Route" />
         </v-col>
     </v-row>
 </template>
