@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DataComponent from './components/DataComponent.vue';
-import MobileAppbar from './components/MobileAppbar.vue';
-import DesktopAppbar from './components/DesktopAppbar.vue';
+import DataComponent from './components/admin/DataComponent.vue';
+import MobileAppbar from './components/application/MobileAppbar.vue';
+import DesktopAppbar from './components/application/DesktopAppbar.vue';
 import { isMobile } from './helpers/EnviorementHelper'
 import { useRouter } from 'vue-router';
 import { watch } from 'vue';
