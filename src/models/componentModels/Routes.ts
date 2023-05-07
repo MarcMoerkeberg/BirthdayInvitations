@@ -1,5 +1,4 @@
 import useFamilyStore from "@/stores/family"
-import { useCurrentUser } from "vuefire"
 
 export interface RouteDetails {
     Title: string
@@ -69,7 +68,7 @@ function showRoute(routeTitle: string, authorizedAdminUser?: boolean): boolean {
         case routes.LandingPage.Title:
             return false
         case routes.Login.Title:
-            return false
+            return !!authorizedAdminUser
         case routes.Menu.Title:
             return true
         case routes.Invitation.Title:

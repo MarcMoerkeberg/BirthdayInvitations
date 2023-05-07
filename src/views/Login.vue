@@ -9,13 +9,14 @@ import { useCurrentUser, useFirebaseAuth } from 'vuefire';
 
 const router = useRouter()
 const auth = useFirebaseAuth() ?? {} as Auth
+const isSignedIn = useCurrentUser()
 
 async function login() {
     try {
         loading.value = true
         await validationForm.value?.validate()
         await signInWithEmailAndPassword(auth, username.value ?? '', password.value ?? '')
-        router.push('/adminoverview')
+        router.push(routes.Admin.Route)
     } catch (error) {
         hideLoginErrorMessage.value = false
     }
@@ -72,8 +73,13 @@ const loginErrorMessage = computed(() => { return hideLoginErrorMessage.value ? 
                 </v-form>
                 <v-divider></v-divider>
                 <v-btn class="login-btn"
+                       color="grey-lighten-2"
+                       :disabled="!!isSignedIn"
                        @click="login">Login</v-btn>
+
                 <v-btn class="login-btn"
+                       color="grey-darken-2"
+                       :disabled="!isSignedIn"
                        @click="logout">Logout</v-btn>
             </v-card>
         </v-col>
