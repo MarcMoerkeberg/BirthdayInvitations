@@ -15,7 +15,7 @@ const props = defineProps<LocationProps>();
 
 const isMobileDevice = isMobile()
 
-/* Used for googles api map search, from docs as of 04.05.2023 - https://developers.google.com/maps/documentation/urls/get-started*/
+/* Used for googles api map search, from docs as of 04.05.2023 - https://developers.google.com/maps/documentation/urls/get-started */
 const addressQuery = computed(() => { return props.location.Address.replace(' ', '+').replace(',', '%2C') })
 const googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${addressQuery}&query_place_id=${props.location.GooglePlaceId}`;
 
@@ -40,7 +40,8 @@ const subtitle = computed(() => {
 
 <template>
     <v-card :title="props.location.Name"
-            :subtitle="subtitle">
+            :subtitle="subtitle"
+            v-show="props.location.Id">
         <v-card-text v-html="props.location.Description" />
 
         <v-row justify="space-evenly"

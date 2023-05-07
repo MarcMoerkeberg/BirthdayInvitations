@@ -37,7 +37,8 @@ const actionButtons = computed(() => {
 
 <template>
     <v-card :title="event.Name"
-            :subtitle="eventSubtitle">
+            :subtitle="eventSubtitle"
+            v-show="event.Id">
         <v-card-text v-html="event.Description" />
         <v-row v-if="!isMobileDevice && actionButtons.length > 0"
                justify="space-evenly"
@@ -51,7 +52,7 @@ const actionButtons = computed(() => {
         </v-row>
     </v-card>
 
-    <v-row v-if="isMobileDevice && actionButtons.length > 0"
+    <v-row v-if="isMobileDevice && actionButtons.length > 0 && event.Id"
            align="center"
            justify="space-evenly">
         <v-col cols="auto"

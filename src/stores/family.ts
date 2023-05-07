@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import fireStoreMappers from '@/mappers/FireStoreMapper'
-import { useDocument, useFirestore, type VueFirestoreQueryData } from 'vuefire'
+import { useFirestore, type VueFirestoreQueryData } from 'vuefire'
 import type { Family, NewFamily } from '@/models/Family'
 import { addDoc, collection, doc, getDoc, query, updateDoc } from 'firebase/firestore'
 import CollectionNames from '@/models/CollectionNames';

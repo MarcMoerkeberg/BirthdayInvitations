@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { collection, doc } from 'firebase/firestore'
 import { useFirestore, useDocument, useCollection } from 'vuefire';
-import type Allergies from '../models/Allergies'
+import type Allergies from '@/models/Allergies'
 import { watch } from 'vue';
-import useFamilyStore from '../stores/family'
+import useFamilyStore from '@/stores/family'
 import useGuestStore from '@/stores/guest';
 import useEventStore from '@/stores/event';
 import type { Family } from '@/models/Family';
