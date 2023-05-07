@@ -6,6 +6,7 @@ import Registration from '../views/Registration.vue'
 import Invitation from '../views/Invitation.vue'
 import Login from '@/views/Login.vue'
 import routes from '@/models/componentModels/Routes'
+import { getCurrentUser } from 'vuefire'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,7 +24,11 @@ const router = createRouter({
     {
       path: routes.Admin.Route,
       name: routes.Admin.Title,
-      component: AdminOverview
+      component: AdminOverview,
+      beforeEnter: async () => {
+        const isAdminUser: boolean = !!await getCurrentUser()
+        return isAdminUser
+      }
     },
     {
       path: routes.Menu.Route + ':familyId?',
