@@ -5,12 +5,15 @@ import type { Guest } from '@/models/Guest';
 import { computed } from 'vue';
 import { watch } from 'vue';
 import useGuestStore from '@/stores/guest';
+import { useCurrentUser } from 'vuefire';
 
 interface RegistrationProps {
-    guest: Guest
+    guest: Guest,
+    familyId: string | undefined
 }
 const props = defineProps<RegistrationProps>()
 
+const currentUser = useCurrentUser()
 const guestStore = useGuestStore()
 const guestName = computed(() => { return `${props.guest.FirstName} ${props.guest.LastName}` })
 
@@ -20,12 +23,22 @@ watch(attending, () => { guestStore.updateGuestAttending(props.guest, attending.
 const allAllergies = computed(() => { return guestStore.allergies })
 var selectedAllergies = ref<Array<string>>(props.guest.Allergies)
 watch(selectedAllergies, () => { guestStore.updateGuestAllergies(props.guest, selectedAllergies.value) })
+
+function copyRegistrationLink() {
+    navigator.clipboard.writeText(`${window.location.origin}/${props.familyId}`);
+}
 </script>
 
 <template>
     <v-card color="primary"
             :title="guestName">
         <v-container>
+            <v-btn v-if="currentUser && props.familyId"
+                   size="small"
+                   color="secondary"
+                   prepend-icon="mdi-content-copy"
+                   @click="copyRegistrationLink"
+                   class="margin-bottom-20p"> Kopiér tilmeldingslink </v-btn>
             <v-switch v-model="attending"
                       density="compact"
                       :value="AttendingType.Birthday"

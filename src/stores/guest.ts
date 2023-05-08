@@ -79,7 +79,7 @@ const useGuestStore = defineStore({
     getGuestsAssociatedWithCurrentFamily: (state: GuestState): Array<Guest> => {
       const familyStore = useFamilyStore()
       let guestsInFamily: Guest[] = []
-      const currentFamily: Family | undefined = familyStore.currentFamily()
+      const currentFamily: Family | undefined = familyStore.currentFamily
 
       if (currentFamily) {
         guestsInFamily = state.guests.filter(guest => currentFamily.MemberIds?.find(familyMemberId => familyMemberId === guest.Id))
@@ -89,7 +89,12 @@ const useGuestStore = defineStore({
     },
     getAllGuestsNotInList: (state: GuestState) => (exceptIds: Array<string>): Array<Guest> => {
       return state.guests.filter(guest => !exceptIds.some(selectedGuestId => selectedGuestId === guest.Id))
-    }
+    },
+    getAllGuests: (state: GuestState) => (searchString: string | undefined): Array<Guest> => {
+      return searchString
+        ? state.guests.filter(guest => guest.FirstName.toLowerCase().includes(searchString.toLowerCase()) || guest.LastName.toLowerCase().includes(searchString.toLowerCase()))
+        : state.guests
+    },
   }
 })
 
