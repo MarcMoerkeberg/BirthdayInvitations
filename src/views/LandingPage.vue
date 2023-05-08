@@ -31,8 +31,9 @@ const isMobileDevice = isMobile()
   <video autoplay
          loop
          muted
-         class="video">
-    <source src="../assets/video/4000-1_04925.mp4"
+         class="video"
+         playsinline>
+    <source src="../assets/video/champagne.mp4"
             type="video/mp4">
   </video>
 </template>
@@ -43,6 +44,7 @@ const isMobileDevice = isMobile()
 }
 
 .video {
+
   height: 100vh;
   width: 100vw;
   object-fit: cover;
