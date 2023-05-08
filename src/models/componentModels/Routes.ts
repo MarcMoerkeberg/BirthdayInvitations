@@ -68,7 +68,7 @@ function showRoute(routeTitle: string, authorizedAdminUser?: boolean): boolean {
         case routes.LandingPage.Title:
             return false
         case routes.Login.Title:
-            return !!authorizedAdminUser
+            return false
         case routes.Menu.Title:
             return true
         case routes.Invitation.Title:

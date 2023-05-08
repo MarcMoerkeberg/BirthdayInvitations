@@ -75,11 +75,13 @@ const loginErrorMessage = computed(() => { return hideLoginErrorMessage.value ? 
                 <v-btn class="login-btn"
                        color="grey-lighten-2"
                        :disabled="!!isSignedIn"
+                       prepend-icon="mdi-login-variant"
                        @click="login">Login</v-btn>
 
                 <v-btn class="login-btn"
                        color="grey-darken-2"
                        :disabled="!isSignedIn"
+                       prepend-icon="mdi-logout-variant"
                        @click="logout">Logout</v-btn>
             </v-card>
         </v-col>
