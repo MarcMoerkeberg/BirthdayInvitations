@@ -37,9 +37,11 @@ const useGuestStore = defineStore({
       const dbResult = await addDoc(collection(db, CollectionNames.Guest), newGuest)
       let dbSuccess = !!dbResult.id
 
-      if (dbSuccess && family.Id) {
-        const familyStore = useFamilyStore()
-        await familyStore.addFamilyMember(family, dbResult.id)
+      if (dbSuccess) {
+        if (family.Id) {
+          const familyStore = useFamilyStore()
+          await familyStore.addFamilyMember(family, dbResult.id)
+        }
 
         const createdGuest: Guest = { ...newGuest, Id: dbResult.id }
         this.guests.push(createdGuest)
