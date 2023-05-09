@@ -9,7 +9,6 @@ import { useCurrentUser } from 'vuefire';
 
 interface RegistrationProps {
     guest: Guest,
-    familyId: string | undefined
 }
 const props = defineProps<RegistrationProps>()
 
@@ -24,8 +23,10 @@ const allAllergies = computed(() => { return guestStore.allergies })
 var selectedAllergies = ref<Array<string>>(props.guest.Allergies)
 watch(selectedAllergies, () => { guestStore.updateGuestAllergies(props.guest, selectedAllergies.value) })
 
+const showSnackBar = ref<boolean>(false)
 function copyRegistrationLink() {
-    navigator.clipboard.writeText(`${window.location.origin}/${props.familyId}`);
+    showSnackBar.value = true
+    navigator.clipboard.writeText(`${window.location.origin}/${props.guest.Id}`);
 }
 </script>
 
@@ -33,12 +34,15 @@ function copyRegistrationLink() {
     <v-card color="primary"
             :title="guestName">
         <v-container>
-            <v-btn v-if="currentUser && props.familyId"
+            <v-btn v-if="currentUser"
                    size="small"
-                   color="secondary"
+                   color="grey-darken-2"
                    prepend-icon="mdi-content-copy"
                    @click="copyRegistrationLink"
                    class="margin-bottom-20p"> Kopiér tilmeldingslink </v-btn>
+            <v-snackbar v-model="showSnackBar"
+                        location="bottom center"
+                        color="secondary">{{ `${props.guest.FirstName}'s tilmeldingslink kopieret.'` }}</v-snackbar>
             <v-switch v-model="attending"
                       density="compact"
                       :value="AttendingType.Birthday"

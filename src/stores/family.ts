@@ -45,9 +45,6 @@ const useFamilyStore = defineStore({
   },
 
   getters: {
-    getFamilyIdFromGuestId: (state: FamilyState) => (guestId: string): string | undefined => {
-      return state.families.find(family => family.MemberIds?.find(memberId => memberId === guestId))?.Id
-    },
     getFamilyFromGuestId: (state: FamilyState) => (guestId: string | undefined): Family | undefined => {
       return state.families.find(family => family.MemberIds?.find(memberId => memberId === guestId))
     },
