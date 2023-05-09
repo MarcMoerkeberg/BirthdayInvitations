@@ -5,22 +5,22 @@ import DesktopAppbar from './components/application/DesktopAppbar.vue';
 import { isMobile } from './helpers/EnviorementHelper'
 import { useRouter } from 'vue-router';
 import { watch } from 'vue';
-import useFamilyStore from './stores/family'
 import LocalStorageKey from './models/componentModels/LocalStorageKey';
+import useGuestStore from './stores/guest';
 
 const isMobileDevice = isMobile()
 const router = useRouter()
-const familyStore = useFamilyStore()
+const guestStore = useGuestStore()
 
 watch(router.currentRoute, async (newValue) => {
-  const familyIdFromRouteParams = newValue.params.familyId
-  const familyIdFromLocalStorage = localStorage.getItem(LocalStorageKey.FamilyId)
+  const guestIdFromRouteParams = newValue.params.guestId
+  const guestIdFromLocalStorage = localStorage.getItem(LocalStorageKey.GuestId)
 
-  if (familyIdFromLocalStorage) {
-    familyStore.setFamilyId(familyIdFromLocalStorage)
+  if (guestIdFromRouteParams) {
+    guestStore.setGuestId(Array.isArray(guestIdFromRouteParams) ? guestIdFromRouteParams[0] : guestIdFromRouteParams)
   }
-  else if (familyIdFromRouteParams) {
-    familyStore.setFamilyId(Array.isArray(familyIdFromRouteParams) ? familyIdFromRouteParams[0] : familyIdFromRouteParams)
+  else if (guestIdFromLocalStorage) {
+    guestStore.setGuestId(guestIdFromLocalStorage)
   }
 })
 </script>

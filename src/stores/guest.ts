@@ -4,14 +4,16 @@ import { useFirestore, type VueFirestoreDocumentData, type VueFirestoreQueryData
 import type Allergies from '@/models/Allergies'
 import type { Guest, NewGuest } from '@/models/Guest'
 import type { Family } from '@/models/Family'
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore'
 import CollectionNames from '@/models/CollectionNames'
 import useFamilyStore from './family'
 import type { AttendingType } from '@/models/componentModels/AttendingType'
+import LocalStorageKey from '@/models/componentModels/LocalStorageKey'
 
 interface GuestState {
   guests: Guest[],
   allergies: Allergies
+  guestId?: string
 }
 
 const useGuestStore = defineStore({
@@ -19,7 +21,8 @@ const useGuestStore = defineStore({
   state: (): GuestState => {
     return {
       guests: [],
-      allergies: { Allergies: [] }
+      allergies: { Allergies: [] },
+      guestId: undefined
     }
   },
 
@@ -61,6 +64,27 @@ const useGuestStore = defineStore({
 
       await updateDoc(guestDocRef, { Allergies: allergies })
     },
+    async setGuestId(guestId: string): Promise<void> {
+      const isValidFamilyId = await this.guestExists(guestId)
+
+      if (isValidFamilyId) {
+        this.guestId = guestId
+        localStorage.setItem(LocalStorageKey.GuestId, guestId)
+      }
+    },
+    async guestExists(guestId: string): Promise<boolean> {
+      let validFamilyInDB: boolean | undefined = undefined
+      const validGuestInState = !!this.guests.find(guest => guest.Id === guestId)
+
+      if (!validGuestInState) {
+        const db = useFirestore()
+        const guestDocRef = await doc(db, CollectionNames.Guest, guestId)
+        const familyDBResult = await getDoc(guestDocRef)
+        validFamilyInDB = !!familyDBResult.data()
+      }
+
+      return validGuestInState || !!validFamilyInDB
+    }
   },
 
   getters: {
@@ -73,28 +97,29 @@ const useGuestStore = defineStore({
 
       return guestsInFamily
     },
-    getAllergyId: (state: GuestState): string | undefined => {
-      return state.allergies.Id
-    },
-    getGuestsAssociatedWithCurrentFamily: (state: GuestState): Array<Guest> => {
-      const familyStore = useFamilyStore()
-      let guestsInFamily: Guest[] = []
-      const currentFamily: Family | undefined = familyStore.currentFamily
-
-      if (currentFamily) {
-        guestsInFamily = state.guests.filter(guest => currentFamily.MemberIds?.find(familyMemberId => familyMemberId === guest.Id))
-      }
-
-      return guestsInFamily
-    },
-    getAllGuestsNotInList: (state: GuestState) => (exceptIds: Array<string>): Array<Guest> => {
-      return state.guests.filter(guest => !exceptIds.some(selectedGuestId => selectedGuestId === guest.Id))
-    },
     getAllGuests: (state: GuestState) => (searchString: string | undefined): Array<Guest> => {
       return searchString
         ? state.guests.filter(guest => guest.FirstName.toLowerCase().includes(searchString.toLowerCase()) || guest.LastName.toLowerCase().includes(searchString.toLowerCase()))
         : state.guests
     },
+    getAllFamilyMembersFromCurrentGuestId: (state: GuestState): Array<Guest> => {
+      const familyStore = useFamilyStore()
+      let allFamilyMembers: Guest[] = []
+      const guestFamily: Family | undefined = familyStore.getFamilyFromGuestId(state.guestId ?? '')
+
+      if (guestFamily) {
+        allFamilyMembers = state.guests.filter(guest => guestFamily.MemberIds?.find(familyMemberId => familyMemberId === guest.Id))
+      }
+      else {
+        const currentGuest = state.guests.find(guest => guest.Id == state.guestId)
+
+        if (currentGuest) {
+          allFamilyMembers.push(currentGuest)
+        }
+      }
+
+      return allFamilyMembers
+    }
   }
 })
 

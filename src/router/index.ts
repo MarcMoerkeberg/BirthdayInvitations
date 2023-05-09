@@ -12,7 +12,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: routes.LandingPage.Route + ':familyId?',
+      path: routes.LandingPage.Route + ':guestId?',
       name: routes.LandingPage.Title,
       component: LandingPage
     },
@@ -31,17 +31,17 @@ const router = createRouter({
       }
     },
     {
-      path: routes.Menu.Route + ':familyId?',
+      path: routes.Menu.Route + ':guestId?',
       name: routes.Menu.Title,
       component: Menu
     },
     {
-      path: routes.Invitation.Route + ':familyId?',
+      path: routes.Invitation.Route + ':guestId?',
       name: routes.Invitation.Title,
       component: Invitation
     },
     {
-      path: routes.Registration.Route + ':familyId?',
+      path: routes.Registration.Route + ':guestId?',
       name: routes.Registration.Title,
       component: Registration
     },

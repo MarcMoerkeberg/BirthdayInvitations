@@ -13,7 +13,7 @@ const searchInput = ref<string | undefined>();
 const familyStore = useFamilyStore()
 const guestStore = useGuestStore()
 const currentUser = useCurrentUser()
-const allGuests = computed(() => { return currentUser.value ? guestStore.getAllGuests(searchInput.value) : guestStore.getGuestsAssociatedWithCurrentFamily })
+const allGuests = computed(() => { return currentUser.value ? guestStore.getAllGuests(searchInput.value) : guestStore.getAllFamilyMembersFromCurrentGuestId })
 
 </script>
 
@@ -31,7 +31,7 @@ const allGuests = computed(() => { return currentUser.value ? guestStore.getAllG
                v-for="guest in allGuests"
                :key="guest.Id">
             <RegistrationComponent :guest="guest"
-                                   :family-id="familyStore.getFamilyIdFromGuest(guest.Id)" />
+                                   :family-id="familyStore.getFamilyIdFromGuestId(guest.Id)" />
         </v-col>
     </v-row>
 </template>

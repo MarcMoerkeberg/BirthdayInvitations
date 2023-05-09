@@ -1,5 +1,6 @@
 enum LocalStorageKey {
-    FamilyId = 'familyId'
+    FamilyId = 'familyId',
+    GuestId = 'guestId'
 }
 
 export default LocalStorageKey

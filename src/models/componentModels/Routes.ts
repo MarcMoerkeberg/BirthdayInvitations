@@ -1,4 +1,4 @@
-import useFamilyStore from "@/stores/family"
+import useGuestStore from "@/stores/guest"
 
 export interface RouteDetails {
     Title: string
@@ -60,7 +60,7 @@ function getHeroButtonsRouteDetails(): Array<RouteDetails> {
 }
 
 function showRoute(routeTitle: string, authorizedAdminUser?: boolean): boolean {
-    const familyStore = useFamilyStore()
+    const guestStore = useGuestStore()
 
     switch (routeTitle) {
         case routes.Admin.Title:
@@ -74,7 +74,7 @@ function showRoute(routeTitle: string, authorizedAdminUser?: boolean): boolean {
         case routes.Invitation.Title:
             return true
         case routes.Registration.Title:
-            return familyStore.familyId !== undefined || !!authorizedAdminUser
+            return !!guestStore.guestId || !!authorizedAdminUser
         default:
             return false;
     }
