@@ -47,12 +47,12 @@ function copyRegistrationLink() {
                       density="compact"
                       :value="AttendingType.Birthday"
                       color="secondary"
-                      label="Detager på havrevang" />
+                      label="Deltager på havrevang" />
             <v-switch v-model="attending"
                       density="compact"
                       color="secondary"
                       :value="AttendingType.Surf"
-                      label="Detager til surf" />
+                      label="Deltager til surf" />
             <v-switch v-model="attending"
                       density="compact"
                       color="secondary"

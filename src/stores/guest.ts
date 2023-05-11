@@ -119,6 +119,12 @@ const useGuestStore = defineStore({
       }
 
       return allFamilyMembers
+    },
+    getNumberOfGuestsAttendingByType: (state: GuestState) => (attendingtype: AttendingType): number => {
+      return state.guests.filter(guest => guest.Attending.includes(attendingtype)).length
+    },
+    getTotalNumberOfGuests: (state: GuestState): number => {
+      return state.guests.length
     }
   }
 })
