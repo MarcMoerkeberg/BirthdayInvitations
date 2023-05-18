@@ -3,6 +3,8 @@ import type Event from "@/models/Event"
 import type { Family } from "@/models/Family"
 import type { Guest } from "@/models/Guest"
 import type Location from "@/models/Location"
+import type Menu from "@/models/Menu"
+import type MenuItem from "@/models/MenuItem"
 import type { VueDatabaseDocumentData, VueFirestoreDocumentData, VueFirestoreQueryData } from "vuefire"
 
 const fireStoreMappers = {
@@ -32,7 +34,7 @@ const fireStoreMappers = {
             Allergies: dbAllergyData?.Allergies ?? []
         } as Allergies
     },
-    mapToEventFromDB(dbEventData: VueFirestoreQueryData<Event>): Event {
+    mapToEventsFromDB(dbEventData: VueFirestoreQueryData<Event>): Array<Event> {
         const mappedEvents = dbEventData.map((event: VueDatabaseDocumentData<Event>) => {
             return {
                 ...event,
@@ -40,7 +42,7 @@ const fireStoreMappers = {
             }
         }) as Array<Event>
 
-        return mappedEvents[0]
+        return mappedEvents
     },
     mapToLocationFromDB(dbEventData: VueFirestoreQueryData<Location>): Array<Location> {
         const mappedLocations = dbEventData.map((event: VueDatabaseDocumentData<Location>) => {
@@ -51,6 +53,26 @@ const fireStoreMappers = {
         }) as Array<Location>
 
         return mappedLocations
+    },
+    mapToMenusFromDB(dbEventData: VueFirestoreQueryData<Menu>): Array<Menu> {
+        const mappedMenus = dbEventData.map((menu: VueDatabaseDocumentData<Menu>) => {
+            return {
+                ...menu,
+                Id: menu?.id
+            }
+        }) as Array<Menu>
+
+        return mappedMenus
+    },
+    mapToMenuItemsFromDB(dbEventData: VueFirestoreQueryData<MenuItem>): Array<MenuItem> {
+        const mappedMenuItems = dbEventData.map((menuItem: VueDatabaseDocumentData<MenuItem>) => {
+            return {
+                ...menuItem,
+                Id: menuItem?.id
+            }
+        }) as Array<MenuItem>
+
+        return mappedMenuItems
     },
 }
 

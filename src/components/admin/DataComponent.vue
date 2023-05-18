@@ -12,6 +12,9 @@ import CollectionNames from '@/models/CollectionNames';
 import type Event from '@/models/Event';
 import useLocationStore from '@/stores/location';
 import type Location from '@/models/Location';
+import useMenuStore from '@/stores/menu';
+import type Menu from '@/models/Menu';
+import type MenuItem from '@/models/MenuItem';
 
 const db = useFirestore()
 const allergiesDBResult = useDocument<Allergies>(doc(collection(db, CollectionNames.Allergies), import.meta.env.VITE_FIREBASE_ALLERGIESID))
@@ -19,11 +22,14 @@ const familiesDBResult = useCollection<Family>(collection(db, CollectionNames.Fa
 const guestsDBResult = useCollection<Guest>(collection(db, CollectionNames.Guest))
 const eventDBResult = useCollection<Event>(collection(db, CollectionNames.Event))
 const locationDBResult = useCollection<Location>(collection(db, CollectionNames.Location))
+const menuDBResult = useCollection<Menu>(collection(db, CollectionNames.Menu))
+const menuItemsDBResult = useCollection<MenuItem>(collection(db, CollectionNames.MenuItem))
 
 const familyStore = useFamilyStore()
 const guestStore = useGuestStore()
 const eventStore = useEventStore()
 const locationStore = useLocationStore()
+const menuStore = useMenuStore()
 
 watch(allergiesDBResult, (newValue, oldValue) => {
     if (newValue != oldValue && newValue) {
@@ -48,6 +54,16 @@ watch(eventDBResult, (newValue, oldValue) => {
 watch(locationDBResult, (newValue, oldValue) => {
     if (newValue != oldValue) {
         locationStore.populateEventFromDbData(newValue)
+    }
+})
+watch(menuDBResult, (newValue, oldValue) => {
+    if (newValue != oldValue) {
+        menuStore.populateMenuFromDbData(newValue)
+    }
+})
+watch(menuItemsDBResult, (newValue, oldValue) => {
+    if (newValue != oldValue) {
+        menuStore.populateMenuItemsFromDbData(newValue)
     }
 })
 </script>

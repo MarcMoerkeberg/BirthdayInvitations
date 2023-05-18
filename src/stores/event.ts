@@ -17,8 +17,8 @@ const useEventStore = defineStore({
 
   actions: {
     async populateEventFromDbData(dbResultData: VueFirestoreQueryData<Event>) {
-      const firstEventMapped = fireStoreMappers.mapToEventFromDB(dbResultData)
-      this.event = firstEventMapped
+      const mappedEvents = fireStoreMappers.mapToEventsFromDB(dbResultData)
+      this.event = mappedEvents[0]
     }
   },
 

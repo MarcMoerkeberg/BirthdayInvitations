@@ -3,7 +3,9 @@ enum CollectionNames {
     Guest = 'Guests',
     Allergies = 'Allergies',
     Event = 'Event',
-    Location = 'Locations'
+    Location = 'Locations',
+    Menu = 'Menus',
+    MenuItem = 'MenuItems',
 }
 
 export default CollectionNames
