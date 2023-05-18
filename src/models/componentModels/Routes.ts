@@ -3,7 +3,8 @@ import useGuestStore from "@/stores/guest"
 export interface RouteDetails {
     Title: string
     Route: string
-    Icon: string | undefined
+    Icon?: string
+    IsExternalLink?: boolean
     ShowRoute: (isAuthorizedAsAdmin?: boolean) => boolean
 }
 
@@ -21,10 +22,10 @@ interface IRoute {
 const routes: IRoute = {
     Registration: { Title: 'Tilmelding', Route: '/registration', Icon: 'mdi-account-plus', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Tilmelding', isAuthorizedAsAdmin) },
     Menu: { Title: 'Menu', Route: '/menu', Icon: 'mdi-silverware-fork-knife', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Menu', isAuthorizedAsAdmin) },
-    Invitation: { Title: 'Invitation', Route: '/invitation', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Invitation', isAuthorizedAsAdmin) },
-    Admin: { Title: 'Admin', Route: '/adminoverview', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Admin', isAuthorizedAsAdmin) },
-    LandingPage: { Title: 'LandingPage', Route: '/', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('LandingPage', isAuthorizedAsAdmin) },
-    Login: { Title: 'Login', Route: '/login', Icon: undefined, ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Login', isAuthorizedAsAdmin) },
+    Invitation: { Title: 'Invitation', Route: '/invitation', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Invitation', isAuthorizedAsAdmin) },
+    Admin: { Title: 'Admin', Route: '/adminoverview', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Admin', isAuthorizedAsAdmin) },
+    LandingPage: { Title: 'LandingPage', Route: '/', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('LandingPage', isAuthorizedAsAdmin) },
+    Login: { Title: 'Login', Route: '/login', ShowRoute: (isAuthorizedAsAdmin?: boolean) => showRoute('Login', isAuthorizedAsAdmin) },
     getNonHiddenRouteDetails: (isAuthorizedAsAdmin?: boolean) => getNonHiddenRouteDetails(isAuthorizedAsAdmin),
     getHeroButtonsRouteDetails: getHeroButtonsRouteDetails,
 }
@@ -55,6 +56,7 @@ function getHeroButtonsRouteDetails(): Array<RouteDetails> {
         heroBtnDetails.push(routes.Registration)
     }
     heroBtnDetails.push(routes.Menu)
+    heroBtnDetails.push({ Title: 'Ønsker', Icon: 'mdi-gift-outline', Route: 'https://onskeskyen.dk/s/YlbRs', IsExternalLink: true, ShowRoute: () => true })
 
     return heroBtnDetails
 }

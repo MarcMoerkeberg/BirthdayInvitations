@@ -16,7 +16,8 @@ const isMobileDevice = isMobile()
     <v-btn v-for="routeDetail in heroButtonRoutes"
            size="large"
            color="secondary"
-           @click="router.push(routeDetail.Route)">{{ routeDetail.Title }}</v-btn>
+           :to="routeDetail.IsExternalLink ? undefined : routeDetail.Route"
+           :href="routeDetail.IsExternalLink ? routeDetail.Route : undefined">{{ routeDetail.Title }}</v-btn>
   </v-container>
   <v-row v-else
          class="overlap-banner horizontal-center">
