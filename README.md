@@ -1,7 +1,7 @@
 # About this project
-This project is a small website used forsending invitations to my 30th birthday (2023).
-I tried using firebase as the db for the first time and also first time using pinia (vue ecosystem statemachine).
-There is a bunch of stuff to improve in this repo, but for the usecase this was a fine project. I learned alot making it, mostly stuff like how a document database works, how to host a website and setting up af CI/CD pipeline for this type of project.
+This project is a small website used forsending invitations to my 30th birthday (2023).\
+I tried some new techonoligies like [firebase](https://firebase.google.com/) as the db, [netlify](https://www.netlify.com/) for hosting and [pinia](https://pinia.vuejs.org/) as the statemanager.\
+There is a bunch of stuff to improve in this repo, but for what it was and the usecases this was a fine project. I learned alot making it, mostly stuff like how a document database works, how to host a website and setting up af CI/CD pipeline for this type of project.
 
 # BirthdayInvitations
 
