@@ -1,3 +1,8 @@
+# About this project
+This project was a small website for invitations to my 30th birthday (2013).
+I tried using firebase as the db for the first time and also firsst time using pinia (vue ecosystem statemachine).
+There was lot's of thingss to improve in this repo, but for the usecasse this was a fine project. I learned alot making it, mostly stuff like how a document database works, how to host a website and setting up af CI/CD pipeline for this type of project.
+
 # BirthdayInvitations
 
 This template should help get you started developing with Vue 3 in Vite.
